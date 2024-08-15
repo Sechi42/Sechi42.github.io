@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sergio Anaya - Data Scientist</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -21,6 +22,14 @@
         </nav>
     </header>
 
+    <section id="hero">
+        <div class="hero-content">
+            <h2>Transformando Datos en Conocimiento</h2>
+            <p>Aplicando Ciencia de Datos para impulsar decisiones empresariales efectivas.</p>
+            <a href="#contact" class="btn-primary">Contáctame</a>
+        </div>
+    </section>
+
     <section id="about">
         <div class="container">
             <h2>Sobre Mí</h2>
@@ -31,8 +40,20 @@
     <section id="projects">
         <div class="container">
             <h2>Proyectos</h2>
-            <p>Aquí puedes ver algunos de los proyectos en los que he trabajado, incluyendo análisis de datos, modelos predictivos, y más.</p>
-            <!-- Puedes añadir detalles de tus proyectos aquí -->
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>Proyecto 1</h3>
+                    <p>Descripción breve del proyecto 1.</p>
+                </div>
+                <div class="project-card">
+                    <h3>Proyecto 2</h3>
+                    <p>Descripción breve del proyecto 2.</p>
+                </div>
+                <div class="project-card">
+                    <h3>Proyecto 3</h3>
+                    <p>Descripción breve del proyecto 3.</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -49,7 +70,7 @@
                 <label for="message">Mensaje:</label>
                 <textarea id="message" name="message" required></textarea>
 
-                <button type="submit">Enviar</button>
+                <button type="submit" class="btn-primary">Enviar</button>
             </form>
         </div>
     </section>
@@ -72,3 +93,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
