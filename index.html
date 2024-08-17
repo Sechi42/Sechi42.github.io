@@ -1,95 +1,111 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sergio Anaya - Data Scientist</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <!-- Redes Sociales al Principio -->
-    <header>
-        <div class="social-icons">
-            <a href="https://github.com/Sechi42" target="_blank">
-                <img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub">
-            </a>
-            <a href="https://www.linkedin.com/in/sergio-anaya-sanchez/" target="_blank">
-                <img src="https://img.icons8.com/ios-filled/50/000000/linkedin.png" alt="LinkedIn">
-            </a>
-            <a href="mailto:sergio.anayads@gmail.com">
-                <img src="https://img.icons8.com/ios-filled/50/000000/gmail.png" alt="Gmail">
-            </a>
-        </div>
-        
-    </header>
+    <style>
+        body {
+            background-color: #111;
+            color: #f0f0f0;
+        }
 
-    <!-- Header -->
-    <header class="text-center text-dark bg-gradient position-relative">
+        /* Espacio adicional para el botón de Contáctame */
+        .header-content a {
+            padding: 12px 40px;
+            border-radius: 30px;
+            margin-top: 40px;
+        }
+
+        .header-content h1, .header-content h2 {
+            color: #fff;
+        }
+
+        /* Animación para el botón */
+        .btn-primary:hover {
+            transform: scale(1.1);
+            background-color: #0052cc;
+        }
+
+        /* Sección de tecnologías */
+        .tech-icons img {
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+            transition: transform 0.3s;
+        }
+
+        .tech-icons img:hover {
+            transform: scale(1.2);
+        }
+
+        /* Sección de estadísticas */
+        .github-stats img {
+            margin-top: 20px;
+        }
+
+        /* Sección espaciada */
+        section {
+            padding: 60px 0;
+            border-top: 1px solid #333;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Redes Sociales y Header -->
+    <header class="text-center bg-gradient position-relative" style="background: url('images/header-bg.jpg') no-repeat center center/cover; padding: 100px 0;">
         <div class="overlay"></div>
         <div class="container">
             <div class="header-content">
-                <h1 class="text-highlight">Sergio Anaya</h1>
-                <h2 class="text-highlight">Data Scientist</h2>
+                <h1>Sergio Anaya</h1>
+                <h2>Data Scientist</h2>
                 <p>Transformando datos en decisiones accionables</p>
                 <a href="#contact" class="btn btn-primary mt-3">Contáctame</a>
             </div>
-            <nav class="navbar navbar-expand-lg navbar-dark position-absolute top-0 end-0 p-3">
-                <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item"><a class="nav-link" href="#about">Sobre Mí</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#projects">Proyectos</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#contact">Contacto</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
         </div>
     </header>
 
-    <!-- About Section -->
-    <section id="about" class="py-5 bg-light text-center">
-        <div class="container">
+    <!-- Sobre mí -->
+    <section id="about" class="py-5">
+        <div class="container text-center">
             <h2>Sobre Mí</h2>
-            <p>Soy un apasionado Data Scientist con experiencia en Machine Learning, procesamiento de datos y análisis predictivo. Me encanta transformar datos en decisiones accionables que impulsen el éxito empresarial. Con un enfoque en la innovación y la eficiencia, busco constantemente aprender y aplicar nuevas tecnologías para resolver problemas complejos.</p>
+            <p>Amante de la ciencia de datos y entusiasta de la tecnología. Actualmente aprendiendo Deep Learning y refinando mis conocimientos en Machine Learning.</p>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-5">
+    <!-- Tecnologías -->
+    <section id="technologies" class="py-5 bg-dark text-center">
         <div class="container">
-            <h2 class="text-center">Proyectos</h2>
-            <div class="row mt-4">
+            <h2>Lenguajes y Herramientas</h2>
+            <div class="tech-icons">
+                <img src="https://skillicons.dev/icons?i=py" alt="Python">
+                <img src="https://skillicons.dev/icons?i=r" alt="R">
+                <img src="https://skillicons.dev/icons?i=tensorflow" alt="TensorFlow">
+                <img src="https://skillicons.dev/icons?i=sklearn" alt="scikit-learn">
+                <img src="https://skillicons.dev/icons?i=aws" alt="AWS">
+                <img src="https://skillicons.dev/icons?i=mysql" alt="MySQL">
+                <img src="https://skillicons.dev/icons?i=git" alt="Git">
+            </div>
+        </div>
+    </section>
+
+    <!-- Proyectos -->
+    <section id="projects" class="py-5 text-center">
+        <div class="container">
+            <h2>Proyectos</h2>
+            <p>Aquí algunos de mis proyectos recientes:</p>
+            <div class="row">
                 <div class="col-md-4">
-                    <div class="project-card shadow-sm">
+                    <div class="project-card">
                         <img src="images/project1.jpg" class="img-fluid" alt="Proyecto 1">
-                        <div class="project-info p-3">
+                        <div class="project-info">
                             <h3>Proyecto 1: Análisis Predictivo</h3>
-                            <p>Descripción breve del proyecto 1, destacando las técnicas de Machine Learning utilizadas y los resultados obtenidos.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="project-card shadow-sm">
-                        <img src="images/project2.jpg" class="img-fluid" alt="Proyecto 2">
-                        <div class="project-info p-3">
-                            <h3>Proyecto 2: Clasificación de Imágenes</h3>
-                            <p>Descripción breve del proyecto 2, enfocada en la implementación de redes neuronales y el impacto en el negocio.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="project-card shadow-sm">
-                        <img src="images/project3.jpg" class="img-fluid" alt="Proyecto 3">
-                        <div class="project-info p-3">
-                            <h3>Proyecto 3: Segmentación de Clientes</h3>
-                            <p>Descripción breve del proyecto 3, destacando la segmentación basada en RFM y su aplicación en estrategias de marketing.</p>
+                            <p>Descripción breve del proyecto.</p>
                         </div>
                     </div>
                 </div>
@@ -97,22 +113,31 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-5 bg-dark text-white">
+    <!-- Estadísticas de GitHub -->
+    <section id="github-stats" class="py-5 bg-dark text-center">
+        <div class="container github-stats">
+            <h2>Mis Estadísticas</h2>
+            <img src="http://github-readme-streak-stats.herokuapp.com?user=Sechi42&theme=dark&background=000000" alt="GitHub Streak"/>
+            <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Sechi42&layout=compact&theme=vision-friendly-dark" alt="Top Langs"/>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contact" class="py-5 text-center">
         <div class="container">
-            <h2 class="text-center">Contacto</h2>
-            <form id="contact-form" class="p-4 shadow-sm rounded bg-white text-dark">
+            <h2>Contacto</h2>
+            <form id="contact-form" class="p-4 bg-white text-dark rounded shadow-sm">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nombre:</label>
-                    <input type="text" id="name" name="name" class="form-control input-highlight" required>
+                    <input type="text" id="name" name="name" class="form-control" required>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email:</label>
-                    <input type="email" id="email" name="email" class="form-control input-highlight" required>
+                    <input type="email" id="email" name="email" class="form-control" required>
                 </div>
                 <div class="mb-3">
                     <label for="message" class="form-label">Mensaje:</label>
-                    <textarea id="message" name="message" class="form-control input-highlight" rows="4" required></textarea>
+                    <textarea id="message" name="message" class="form-control" rows="4" required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Enviar</button>
             </form>
@@ -126,9 +151,13 @@
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
 </body>
+
 </html>
+
+
+
+
 
 
 
