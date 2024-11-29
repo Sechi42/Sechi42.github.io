@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sergio Anaya - Dashboards</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #111;
+            color: #f0f0f0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        header {
+            background: linear-gradient(to right, #0052cc, #002d72);
+            padding: 40px 0;
+        }
+
+        header h1 {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #ddd;
+        }
+
+        .dashboard {
+            margin-bottom: 40px;
+        }
+
+        .dashboard iframe {
+            border: 0;
+            border-radius: 8px;
+            width: 100%;
+            height: 600px;
+        }
+
+        .dashboard-title {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        footer {
+            background-color: #000;
+            color: #888;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .btn-back {
+            background-color: #0052cc;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .btn-back:hover {
+            transform: scale(1.1);
+            background-color: #002d72;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="text-center">
+        <div class="container">
+            <h1>Dashboards Profesionales</h1>
+            <p>Explora mis análisis visuales en Tableau.</p>
+        </div>
+    </header>
+
+    <main class="container my-5">
+        <section class="dashboard">
+            <h2 class="dashboard-title">Segmentación de Clientes - Banco</h2>
+            <iframe src="https://public.tableau.com/views/Segmentation_History/SegmentationDashboard?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" allowfullscreen></iframe>
+        </section>
+
+        <section class="dashboard">
+            <h2 class="dashboard-title">Mapa de Ventas por Vendedor - E-commerce Brasil</h2>
+            <iframe src="https://public.tableau.com/app/profile/sergio.anaya.s.nchez/viz/GeoPayments/Hoja1" allowfullscreen></iframe>
+        </section>
+
+        <section class="dashboard">
+            <h2 class="dashboard-title">Scatterplot de Profit por Estado</h2>
+            <iframe src="https://public.tableau.com/app/profile/sergio.anaya.s.nchez/viz/Section_4_17312691502260/Dashboard1" allowfullscreen></iframe>
+        </section>
+
+        <div class="text-center">
+            <a href="index.html" class="btn-back">Volver a la página principal</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2024 Sergio Anaya | Dashboards desarrollados en Tableau.</p>
+    </footer>
+</body>
+
+</html>
