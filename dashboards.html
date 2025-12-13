@@ -1,106 +1,108 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sergio Anaya - Dashboards</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Sergio Anaya Sánchez | Dashboards</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            background-color: #111;
-            color: #f0f0f0;
-            font-family: 'Poppins', sans-serif;
+        .tableau-container {
+            background: var(--card-bg);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
         }
-
-        header {
-            background: linear-gradient(to right, #0052cc, #002d72);
-            padding: 40px 0;
+        .dashboard-item {
+            margin-bottom: 5rem;
         }
-
-        header h1 {
-            color: #fff;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+        .dashboard-title-custom {
+            color: var(--accent-color);
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-
-        header p {
-            color: #ddd;
-        }
-
-        .dashboard {
-            margin-bottom: 40px;
-        }
-
-        .dashboard iframe {
-            border: 0;
-            border-radius: 8px;
-            width: 100%;
-            height: 600px;
-        }
-
-        .dashboard-title {
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            color: #fff;
-        }
-
-        footer {
-            background-color: #000;
-            color: #888;
-            padding: 20px 0;
-            text-align: center;
-        }
-
-        .btn-back {
-            background-color: #0052cc;
-            border: none;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 30px;
-            transition: transform 0.3s, background-color 0.3s;
-        }
-
-        .btn-back:hover {
-            transform: scale(1.1);
-            background-color: #002d72;
+        .dashboard-title-custom::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 24px;
+            background: var(--accent-color);
+            border-radius: 2px;
         }
     </style>
 </head>
-
 <body>
-    <header class="text-center">
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="SAS Logo" class="nav-logo">
+            </a>
+            <div class="nav-links">
+                <a href="index.html#projects">Proyectos</a>
+                <a href="index.html#architecture">Arquitectura</a>
+                <a href="index.html#contact">Contacto</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero" style="padding-bottom: 2rem; min-height: auto;">
         <div class="container">
             <h1>Dashboards Profesionales</h1>
-            <p>Explora mis análisis visuales en Tableau.</p>
+            <p class="hero-text">Análisis visuales interactivos desarrollados en Tableau para la toma de decisiones estratégicas.</p>
         </div>
-    </header>
+    </section>
 
-    <main class="container my-5">
-        <section class="dashboard">
-            <h2 class="dashboard-title">Segmentación de Clientes - Banco</h2>
-            <div class='tableauPlaceholder' id='viz1732851521615' style='position: relative'><noscript><a href='#'><img alt='Segmentation Dashboard ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;QQ&#47;QQB4MQ24J&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='path' value='shared&#47;QQB4MQ24J' /> <param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;QQ&#47;QQB4MQ24J&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1732851521615');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='1000px';vizElement.style.height='727px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='1000px';vizElement.style.height='727px';} else { vizElement.style.width='100%';vizElement.style.height='1677px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
-        </section>
+    <section class="dashboards-list">
+        <div class="container">
+            
+            <!-- Dashboard 1 -->
+            <div class="dashboard-item">
+                <h2 class="dashboard-title-custom">Segmentación de Clientes - Banco</h2>
+                <div class="tableau-container">
+                    <div class='tableauPlaceholder' id='viz1732851521615' style='position: relative'><noscript><a href='#'><img alt='Segmentation Dashboard ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;QQ&#47;QQB4MQ24J&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='path' value='shared&#47;QQB4MQ24J' /> <param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;QQ&#47;QQB4MQ24J&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1732851521615');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='1000px';vizElement.style.height='727px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='1000px';vizElement.style.height='727px';} else { vizElement.style.width='100%';vizElement.style.height='1677px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+                </div>
+            </div>
 
-        <section class="dashboard">
-            <h2 class="dashboard-title">Mapa de Ventas por Vendedor - E-commerce Brasil</h2>
-            <div class='tableauPlaceholder' id='viz1732851655651' style='position: relative'><noscript><a href='#'><img alt='Payment Values ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;54&#47;548GPMFQH&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='path' value='shared&#47;548GPMFQH' /> <param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;54&#47;548GPMFQH&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1732851655651');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
-        </section>
+            <!-- Dashboard 2 -->
+            <div class="dashboard-item">
+                <h2 class="dashboard-title-custom">Mapa de Ventas por Vendedor - E-commerce Brasil</h2>
+                <div class="tableau-container">
+                    <div class='tableauPlaceholder' id='viz1732851655651' style='position: relative'><noscript><a href='#'><img alt='Payment Values ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;54&#47;548GPMFQH&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='path' value='shared&#47;548GPMFQH' /> <param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;54&#47;548GPMFQH&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1732851655651');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+                </div>
+            </div>
 
-        <section class="dashboard">
-            <h2 class="dashboard-title">Scatterplot de Profit por Estado</h2>
-            <div class='tableauPlaceholder' id='viz1732851694255' style='position: relative'><noscript><a href='#'><img alt='Dashboard 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Se&#47;Section_4_17312691502260&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Section_4_17312691502260&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Se&#47;Section_4_17312691502260&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1732851694255');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.minWidth='1320px';vizElement.style.maxWidth='1420px';vizElement.style.width='100%';vizElement.style.minHeight='587px';vizElement.style.maxHeight='887px';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.minWidth='1320px';vizElement.style.maxWidth='1420px';vizElement.style.width='100%';vizElement.style.minHeight='587px';vizElement.style.maxHeight='887px';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.height='827px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
-        </section>
+            <!-- Dashboard 3 -->
+            <div class="dashboard-item">
+                <h2 class="dashboard-title-custom">Scatterplot de Profit por Estado</h2>
+                <div class="tableau-container">
+                    <div class='tableauPlaceholder' id='viz1732851694255' style='position: relative'><noscript><a href='#'><img alt='Dashboard 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Se&#47;Section_4_17312691502260&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Section_4_17312691502260&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Se&#47;Section_4_17312691502260&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1732851694255');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.minWidth='1320px';vizElement.style.maxWidth='1420px';vizElement.style.width='100%';vizElement.style.minHeight='587px';vizElement.style.maxHeight='887px';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.minWidth='1320px';vizElement.style.maxWidth='1420px';vizElement.style.width='100%';vizElement.style.minHeight='587px';vizElement.style.maxHeight='887px';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.height='827px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+                </div>
+            </div>
 
-        <div class="text-center">
-            <a href="index.html" class="btn-back">Volver a la página principal</a>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="index.html" class="btn btn-primary"><i class="fa-solid fa-arrow-left"></i> Volver a la página principal</a>
+            </div>
+
         </div>
-    </main>
+    </section>
 
-    <footer>
-        <p>© 2024 Sergio Anaya | Dashboards desarrollados en Tableau.</p>
+    <footer id="contact">
+        <div class="container">
+            <p>&copy; 2025 Sergio Anaya Sánchez. Todos los derechos reservados.</p>
+        </div>
     </footer>
-</body>
 
+</body>
 </html>

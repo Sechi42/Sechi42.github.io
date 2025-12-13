@@ -1,247 +1,324 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sergio Anaya - Data Scientist</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <style>
-        body {
-            background-color: #111;
-            color: #f0f0f0;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .header-content a {
-            padding: 12px 40px;
-            border-radius: 30px;
-            margin-top: 40px;
-        }
-
-        .header-content h1,
-        .header-content h2 {
-            color: #fff;
-        }
-
-        .btn-primary:hover {
-            transform: scale(1.1);
-            background-color: #0052cc;
-            transition: all 0.3s ease;
-        }
-
-        .tech-icons img {
-            width: 50px;
-            height: 50px;
-            margin: 10px;
-            transition: transform 0.3s;
-        }
-
-        .tech-icons img:hover {
-            transform: scale(1.2);
-        }
-
-        section {
-            padding: 60px 0;
-            border-top: 1px solid #333;
-        }
-
-        @media (max-width: 768px) {
-            .header-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .header-content h2 {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
+    <title>Sergio Anaya Sánchez | Senior Data Scientist & Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-
 <body>
-    <header class="text-center bg-gradient position-relative" style="background: url('/images/header-bg.jpg') no-repeat center center/cover; padding: 100px 0;">
-        <div class="overlay"></div>
+
+    <nav class="navbar">
         <div class="container">
-            <div class="header-content">
-                <h1>Sergio Anaya</h1>
-                <h2>Data Scientist</h2>
-                <p>Transformando datos en decisiones accionables</p>
-                <a href="#contact" class="btn btn-primary mt-3">Contáctame</a>
+            <a href="#" class="logo">
+                <img src="images/logo.png" alt="SAS Logo" class="nav-logo">
+            </a>
+            <div class="nav-links">
+                <a href="#projects">Proyectos</a>
+                <a href="#architecture">Arquitectura</a>
+                <a href="#contact">Contacto</a>
+                <span class="nav-divider"></span>
+                <a href="https://www.linkedin.com/in/sergio-anaya-sanchez/" target="_blank" class="nav-social" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://github.com/Sechi42" target="_blank" class="nav-social" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="mailto:sergio.anaya.sanchez@gmail.com" class="nav-social" title="Email"><i class="fa-solid fa-envelope"></i></a>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <section id="video-cv" class="text-center bg-dark py-5">
+    <section class="hero">
         <div class="container">
-            <h2>Mi Video CV</h2>
-            <div class="social-icons">
-                <a href="https://www.linkedin.com/in/sergio-anaya-sanchez/" target="_blank" class="mx-2">
-                    <i class="fab fa-linkedin fa-2x"></i>
-                </a>
-                <a href="https://github.com/Sechi42" target="_blank" class="mx-2">
-                    <i class="fab fa-github fa-2x"></i>
-                </a>
-                <a href="mailto:sergio.anayads@gmail.com" class="mx-2">
-                    <i class="fas fa-envelope fa-2x"></i>
-                </a>
+            <img src="images/logo.png" alt="Sergio Anaya Sánchez Logo" class="hero-logo">
+            <h1>Sergio Anaya Sánchez</h1>
+            <h2>Científico de Datos | Arquitectura Cloud & Optimización</h2>
+            <p class="hero-text">Transformando datos complejos en soluciones escalables y valor de negocio tangible.</p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">Ver Proyectos</a>
+                <a href="utils/Data_Scientist_Sergio_Anaya.pdf" download class="btn btn-secondary">Descargar CV</a>
             </div>
-            <div class="video-container mt-4">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/MN4_kX4zWak" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <section id="architecture" class="architecture">
+        <div class="container">
+            <h2 class="section-title">Diseño de Sistemas Complejos</h2>
+            <div style="text-align: center;">
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+                    Arquitectura de microservicios y flujos de datos orquestados. Haz clic para ver el diagrama detallado.
+                </p>
+                <button id="openArchModal" class="btn btn-primary">
+                    <i class="fa-solid fa-network-wired"></i> Ver Diagrama de Sistema
+                </button>
             </div>
         </div>
     </section>
 
-    <section id="about" class="py-5">
-        <div class="container text-center">
-            <h2>Sobre Mí</h2>
-            <p>Amante de la ciencia de datos y entusiasta de la tecnología. Actualmente aprendiendo Deep Learning y refinando mis conocimientos en Machine Learning. Tengo experiencia en modelado predictivo, MLOps y análisis de sentimientos utilizando BERT. Estoy certificado como AWS Cloud Practitioner y trabajo con un enfoque en Machine Learning y MLOps.</p>
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">Proyectos Destacados</h2>
+            <div class="projects-grid">
+                
+                <!-- Proyecto 1 -->
+                <div class="project-card">
+                    <div class="card-image">
+                        <img src="images/ysga_swarm.png" alt="YSGA-PyRust Project">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <i class="fa-brands fa-rust" title="Rust"></i>
+                            <i class="fa-brands fa-python" title="Python"></i>
+                            <i class="fa-solid fa-microchip" title="CUDA/GPU"></i>
+                        </div>
+                        <h3>YSGA-PyRust</h3>
+                        <span class="tag">R&D y Optimización</span>
+                        <p>Librería híbrida de metaheurísticas para VRP. Aceleración 50x vs Python puro usando bindings de Rust y paralelismo.</p>
+                        <a href="https://github.com/Sechi42/ysga_pyrust" target="_blank" class="btn-card">Ver en GitHub <i class="fa-brands fa-github"></i></a>
+                    </div>
+                </div>
+
+                <!-- Proyecto 2 -->
+                <div class="project-card">
+                    <div class="card-image">
+                        <img src="images/fleet_api.png" alt="API Fleet 2.0 Project">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <i class="fa-brands fa-aws" title="AWS Lambda"></i>
+                            <i class="fa-solid fa-server" title="Terraform"></i>
+                            <i class="fa-solid fa-database" title="PostgreSQL"></i>
+                        </div>
+                        <h3>API Fleet 2.0</h3>
+                        <span class="tag">Logística Analytics & AWS Serverless</span>
+                        <p>
+                            <strong>Visión de Negocio:</strong> Transformación de telemetría vehicular en un producto de valor agregado que ofrece trazabilidad total a clientes finales, reduciendo significativamente la carga operativa del equipo de monitoreo.
+                            <br><br>
+                            <strong>Implementación:</strong> Diseño de una arquitectura orientada a eventos para procesar flujos de datos en tiempo real y proporcionar información crítica de las unidades asignadas.
+                        </p>
+                        <!-- Sin botón -->
+                    </div>
+                </div>
+
+                <!-- Proyecto 3 -->
+                <div class="project-card">
+                    <div class="card-image">
+                        <img src="images/audit_ai.png" alt="Auditoría Inteligente Project">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <i class="fa-solid fa-file-contract" title="NLP"></i>
+                            <i class="fa-brands fa-google" title="Google APIs"></i>
+                            <i class="fa-solid fa-robot" title="Textract"></i>
+                        </div>
+                        <h3>Auditoría Inteligente</h3>
+                        <span class="tag">Automation</span>
+                        <p>Ecosistema de automatización documental. Extracción OCR/NLP para auditoría comercial y compliance normativo.</p>
+                        <a href="#" id="openAuditModal" class="btn-card">Ver Arquitectura <i class="fa-solid fa-sitemap"></i></a>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </section>
 
-    <section id="technologies" class="py-5 bg-dark text-center">
+    <section class="dashboards">
         <div class="container">
-            <h2>Lenguajes y Herramientas</h2>
-            <div class="tech-icons mb-4">
-                <img src="https://skillicons.dev/icons?i=py" alt="Python">
-                <img src="https://skillicons.dev/icons?i=r" alt="R">
-                <img src="https://skillicons.dev/icons?i=tensorflow" alt="TensorFlow">
-                <img src="https://skillicons.dev/icons?i=sklearn" alt="scikit-learn">
-                <img src="https://skillicons.dev/icons?i=aws" alt="AWS">
-                <img src="https://skillicons.dev/icons?i=mysql" alt="MySQL">
-                <img src="https://skillicons.dev/icons?i=git" alt="Git">
-                <img src="https://skillicons.dev/icons?i=docker" alt="Docker">
-                <img src="https://skillicons.dev/icons?i=fastapi" alt="FastAPI">
-                <img src="https://skillicons.dev/icons?i=s3" alt="AWS S3">
-            </div>
-            <p class="mb-4">Además de mis habilidades en programación y herramientas, tengo experiencia en Tableau para crear dashboards interactivos y atractivos que cuentan historias claras con datos.</p>
+            <h2 class="section-title">Dashboards & Analytics</h2>
+            <p class="section-subtitle">Visualización de KPIs operativos en tiempo real. Stack: SQL, Polars, Looker/Streamlit.</p>
             
-            <!-- Botón con animación -->
-            <a href="dashboards.html" class="btn btn-primary btn-lg custom-btn">
-                Ver Mis Dashboards
-            </a>
-        </div>
-    </section>
-    
-    <!-- Estilo CSS adicional -->
-    <style>
-        .custom-btn {
-            background-color: #0052cc;
-            border: none;
-            color: #fff;
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease-in-out;
-            margin-top: 20px;
-        }
-    
-        .custom-btn:hover {
-            transform: scale(1.1);
-            background-color: #002d72;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
-        }
-    </style>
-
-    <section id="projects" class="py-5 text-center">
-        <div class="container">
-            <h2>Proyectos</h2>
-            <p>Aquí algunos de mis proyectos recientes, haz clic en la imagen para verlos:</p>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="project-card">
-                        <a href="https://customerchurnprediction01.streamlit.app/" target="_blank">
-                            <img src="/images/Raw_App_Screenshot.png" class="img-fluid project-img" alt="Proyecto 1">
-                        </a>
-                        <div class="project-info">
-                            <h3>Modelo de Predicción de Churn</h3>
-                            <p>Desarrollé y desplegué un modelo de machine learning en una página web de Streamlit para predecir churn de clientes utilizando Python, Docker, GitHub Actions, AWS EC2, ECR y FastAPI, logrando un AUC-ROC > 0.88.</p>
-                        </div>
-                    </div>
+            <div class="laptop-mockup">
+                <div class="screen">
+                    <a href="dashboards.html">
+                        <img src="images/dashboard_preview.png" alt="Dashboard Analytics" onerror="this.src='https://placehold.co/800x500/1e293b/FFF?text=Dashboard+Preview'">
+                    </a>
                 </div>
-    
-                <div class="col-md-4">
-                    <div class="project-card">
-                        <a href="https://www.youtube.com/watch?v=xz4Blsgv38Q" target="_blank">
-                            <img src="/images/projecto_BERT.png" class="img-fluid project-img" alt="Proyecto 2">
-                        </a>
-                        <div class="project-info">
-                            <h3>Análisis de Sentimientos en Reseñas de IMDb con BERT</h3>
-                            <p>Construí y ajusté un modelo BERT para análisis de sentimientos en reseñas de IMDb, logrando un F1 score de 0.85 utilizando Python, BERT, Scikit-learn y Mlflow.</p>
-                        </div>
-                    </div>
-                </div>
-    
-                <div class="col-md-4">
-                    <div class="project-card">
-                        <a href="/images/Descripción del proyecto.pdf" target="_blank">
-                            <img src="/images/imagen_proyect_4.png" class="img-fluid project-img" alt="Proyecto 3">
-                        </a>
-                        <div class="project-info">
-                            <h3>Predicción de Pedidos de Taxi</h3>
-                            <p>Desarrollé un modelo de machine learning para predecir la cantidad de pedidos de taxis en aeropuertos utilizando datos históricos. El modelo XGBoost fue el más eficiente, logrando un RMSE de 40.78, superando el objetivo planteado (RMSE ≤ 48).</p>
-                        </div>
-                    </div>
-                </div>
+                <div class="keyboard"></div>
             </div>
         </div>
     </section>
 
-    <section id="github-stats" class="py-5 bg-dark text-center">
-        <div class="container github-stats">
-            <h2>Mis Estadísticas</h2>
-            <img src="http://github-readme-streak-stats.herokuapp.com?user=Sechi42&theme=dark&background=000000" alt="GitHub Streak">
-            <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Sechi42&layout=compact&theme=vision-friendly-dark" alt="Top Langs">
-        </div>
-    </section>
-
-    <section id="contact" class="py-5 text-center">
+    <section id="contact" class="connect">
         <div class="container">
-            <h2>Contacto</h2>
-            <form id="contact-form" class="p-4 bg-white text-dark rounded shadow-sm" action="https://formspree.io/f/xwpkkdqg" method="POST">
-                <div class="mb-3">
-                    <label for="from_name" class="form-label">Tu Nombre:</label>
-                    <input type="text" id="from_name" name="from_name" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="message" class="form-label">Mensaje:</label>
-                    <textarea id="message" name="message" class="form-control" rows="4" required></textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Tu Email:</label>
-                    <input type="email" id="email" name="email" class="form-control" required>
-                </div>
-                <button type="submit" id="submit-btn" class="btn btn-primary w-100">Enviar</button>
-            </form>
-            <div id="success-message" class="mt-3 text-success" style="display: none;">¡Tu mensaje ha sido enviado con éxito!</div>
-            <div id="error-message" class="mt-3 text-danger" style="display: none;">Hubo un error al enviar tu mensaje. Inténtalo nuevamente más tarde.</div>
+            <h2 class="section-title">Conectemos</h2>
+            <p class="section-subtitle">¿Interesado en colaborar o discutir sobre datos y arquitectura? Encuéntrame en mis redes.</p>
+            <div class="social-grid">
+                <a href="https://www.linkedin.com/" target="_blank" class="social-card linkedin">
+                    <i class="fa-brands fa-linkedin"></i>
+                    <span>LinkedIn</span>
+                    <p>Conecta profesionalmente</p>
+                </a>
+                <a href="https://github.com/Sechi42" target="_blank" class="social-card github">
+                    <i class="fa-brands fa-github"></i>
+                    <span>GitHub</span>
+                    <p>Explora mi código</p>
+                </a>
+                <a href="mailto:sergio.anaya.sanchez@gmail.com" class="social-card gmail">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>Gmail</span>
+                    <p>Contáctame directamente</p>
+                </a>
+            </div>
         </div>
     </section>
 
-    <footer class="text-center py-4">
-        <p>© 2024 Sergio Anaya | Todos los derechos reservados.</p>
-        <div class="social-icons">
-            <a href="https://www.linkedin.com/in/sergio-anaya-sanchez/" target="_blank" class="mx-2">
-                <i class="fab fa-linkedin fa-2x"></i>
-            </a>
-            <a href="https://github.com/Sechi42" target="_blank" class="mx-2">
-                <i class="fab fa-github fa-2x"></i>
-            </a>
-            <a href="mailto:sergio.anayads@gmail.com" class="mx-2">
-                <i class="fas fa-envelope fa-2x"></i>
-            </a>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Sergio Anaya Sánchez. Todos los derechos reservados.</p>
         </div>
     </footer>
-    
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Modal para Auditoría Inteligente -->
+    <div id="auditModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="auditModal">&times;</span>
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <img src="images/logo.png" alt="SAS Logo" style="height: 80px; width: auto;">
+            </div>
+            <h2>Arquitectura: Auditoría Inteligente</h2>
+            <div class="mermaid">
+graph TD
+  subgraph "👥 Actores Humanos"
+    COMERCIAL[👤 Comercial]
+    ADMIN[👨‍💼 Admin]
+    OPERADOR[🚚 Operador]
+    CLIENTE[🏢 Cliente]
+    AUDITOR[🔍 Auditor]
+  end
+
+  subgraph "🤖 Actores del Sistema"
+    LAMBDA[⚡ Lambda]
+    SCHEDULER[⏰ Scheduler]
+    TRIGGER[🔔 Trigger BD]
+  end
+
+  subgraph "🔌 Sistemas Externos"
+    PEMEX[🏭 API Proveedores]
+    DRIVE[☁️ Google Drive]
+    SHEETS[📊 Google Sheets]
+    TEXTRACT[🔍 AWS Textract]
+  end
+
+  COMERCIAL -->|Opera| LAMBDA
+  ADMIN -->|Configura| LAMBDA
+  OPERADOR -->|Consulta| SHEETS
+  CLIENTE -->|Responde| COMERCIAL
+  AUDITOR -->|Revisa logs| ADMIN
+
+  LAMBDA -->|Consume| PEMEX
+  LAMBDA -->|Escribe| DRIVE
+  LAMBDA -->|Sincroniza| SHEETS
+  LAMBDA -->|Extrae datos| TEXTRACT
+  LAMBDA -->|Ejecuta| TRIGGER
+
+  SCHEDULER -->|Programa| LAMBDA
+  TRIGGER -->|Valida reglas| LAMBDA
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Arquitectura General -->
+    <div id="archModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="archModal">&times;</span>
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <img src="images/logo.png" alt="SAS Logo" style="height: 80px; width: auto;">
+            </div>
+            <h2>Diseño de Sistemas Complejos</h2>
+            <div class="mermaid">
+graph TD
+  subgraph "👥 Actores Humanos"
+    COMERCIAL[👤 Comercial]
+    ADMIN[👨‍💼 Admin]
+    OPERADOR[🚚 Operador]
+    CLIENTE[🏢 Cliente]
+    AUDITOR[🔍 Auditor]
+  end
+
+  subgraph "🤖 Actores del Sistema"
+    LAMBDA[⚡ Lambda]
+    SCHEDULER[⏰ Scheduler]
+    TRIGGER[🔔 Trigger BD]
+  end
+
+  subgraph "🔌 Sistemas Externos"
+    PEMEX[🏭 API Proveedores]
+    DRIVE[☁️ Google Drive]
+    SHEETS[📊 Google Sheets]
+    TEXTRACT[🔍 AWS Textract]
+  end
+
+  COMERCIAL -->|Opera| LAMBDA
+  ADMIN -->|Configura| LAMBDA
+  OPERADOR -->|Consulta| SHEETS
+  CLIENTE -->|Responde| COMERCIAL
+  AUDITOR -->|Revisa logs| ADMIN
+
+  LAMBDA -->|Consume| PEMEX
+  LAMBDA -->|Escribe| DRIVE
+  LAMBDA -->|Sincroniza| SHEETS
+  LAMBDA -->|Extrae datos| TEXTRACT
+  LAMBDA -->|Ejecuta| TRIGGER
+
+  SCHEDULER -->|Programa| LAMBDA
+  TRIGGER -->|Valida reglas| LAMBDA
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        
+        // Initialize with startOnLoad: false to control rendering manually
+        mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
+
+        // Modal Logic Generic
+        function setupModal(btnId, modalId) {
+            const btn = document.getElementById(btnId);
+            const modal = document.getElementById(modalId);
+            
+            if (btn && modal) {
+                btn.onclick = async function(e) {
+                    e.preventDefault();
+                    modal.style.display = "block";
+                    
+                    // Render mermaid diagram inside the modal when it becomes visible
+                    const mermaidDiv = modal.querySelector('.mermaid');
+                    if (mermaidDiv) {
+                        // Reset processed attribute to force re-render if needed, 
+                        // or just let mermaid handle it. 
+                        // In v10 run() handles unproccesed nodes.
+                        try {
+                            await mermaid.run({ nodes: [mermaidDiv] });
+                        } catch (error) {
+                            console.error("Mermaid render error:", error);
+                        }
+                    }
+                }
+            }
+        }
+
+        setupModal("openAuditModal", "auditModal");
+        setupModal("openArchModal", "archModal");
+
+        // Close buttons
+        const closeButtons = document.getElementsByClassName("close-modal");
+        for (let i = 0; i < closeButtons.length; i++) {
+            closeButtons[i].onclick = function() {
+                const modalId = this.getAttribute("data-modal");
+                document.getElementById(modalId).style.display = "none";
+            }
+        }
+
+        // Click outside to close
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+            }
+        }
+    </script>
 </body>
-
 </html>
