@@ -319,6 +319,27 @@ graph TD
                 event.target.style.display = "none";
             }
         }
+
+        // Toast Logic
+        function showToast() {
+            const toast = document.getElementById("toast");
+            toast.className = "toast show";
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+        // Mailto Handler
+        const mailLinks = document.querySelectorAll('a[href^="mailto:"]');
+        mailLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const email = this.getAttribute('href').replace('mailto:', '');
+                navigator.clipboard.writeText(email).then(() => {
+                    showToast();
+                }).catch(err => {
+                    console.error('Error al copiar email: ', err);
+                });
+            });
+        });
     </script>
+    <div id="toast" class="toast">Email copiado al portapapeles</div>
 </body>
 </html>
