@@ -10,37 +10,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="images/logo.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .tableau-container {
-            background: var(--card-bg);
-            border: var(--glass-border);
-            border-radius: 16px;
-            padding: 1rem;
-            overflow: hidden;
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-        }
-        .dashboard-item {
-            margin-bottom: 5rem;
-        }
-        .dashboard-title-custom {
-            color: var(--accent-color);
-            font-size: 1.75rem;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .dashboard-title-custom::before {
-            content: '';
-            display: block;
-            width: 4px;
-            height: 24px;
-            background: var(--accent-color);
-            border-radius: 2px;
-        }
-    </style>
+    <!-- Anti-flash: apply saved theme before first paint -->
+    <script>(function(){const t=localStorage.getItem('theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})()</script>
 </head>
 <body>
 
@@ -49,10 +20,26 @@
             <a href="index.html" class="logo">
                 <img src="images/logo.png" alt="SAS Logo" class="nav-logo">
             </a>
-            <div class="nav-links">
-                <a href="index.html#projects">Proyectos</a>
-                <a href="index.html#architecture">Arquitectura</a>
-                <a href="index.html#contact">Contacto</a>
+
+            <button id="hamburger" class="hamburger" aria-label="Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="nav-links-text">
+                <a href="index.html#projects" data-i18n="nav.projects">Proyectos</a>
+                <a href="index.html#architecture" data-i18n="nav.architecture">Arquitectura</a>
+                <a href="index.html#contact" data-i18n="nav.contact">Contacto</a>
+            </div>
+
+            <div class="nav-links-actions">
+                <span class="nav-divider"></span>
+                <a href="https://www.linkedin.com/in/sergio-anaya-sanchez/" target="_blank" class="nav-social" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://github.com/Sechi42" target="_blank" class="nav-social" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="mailto:sergio.anayads@gmail.com" class="nav-social" title="Email"><i class="fa-solid fa-envelope"></i></a>
+                <button class="theme-toggle nav-toggle-btn" aria-label="Toggle theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button class="lang-toggle nav-toggle-btn" aria-label="Toggle language">EN</button>
             </div>
         </div>
     </nav>
@@ -66,12 +53,12 @@
 
     <section class="dashboards-list">
         <div class="container">
-            
+
             <!-- Dashboard 1 -->
             <div class="dashboard-item">
                 <h2 class="dashboard-title-custom">Segmentación de Clientes - Banco</h2>
                 <div class="tableau-container">
-                    <div class='tableauPlaceholder' id='viz1732851521615' style='position: relative'><noscript><a href='#'><img alt='Segmentation Dashboard ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;QQ&#47;QQB4MQ24J&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='path' value='shared&#47;QQB4MQ24J' /> <param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;QQ&#47;QQB4MQ24J&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1732851521615');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='1000px';vizElement.style.height='727px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='1000px';vizElement.style.height='727px';} else { vizElement.style.width='100%';vizElement.style.height='1677px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+                    <div class='tableauPlaceholder' id='viz1732851521615' style='position: relative'><noscript><a href='#'><img alt='Segmentation Dashboard ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;QQ&#47;QQB4MQ24J&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='path' value='shared&#47;QQB4MQ24J' /> <param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;QQ&#47;QQB4MQ24J&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div><script type='text/javascript'>var divElement = document.getElementById('viz1732851521615'); var vizElement = divElement.getElementsByTagName('object')[0]; if ( divElement.offsetWidth > 800 ) { vizElement.style.width='1000px';vizElement.style.height='727px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='1000px';vizElement.style.height='727px';} else { vizElement.style.width='100%';vizElement.style.height='1677px';} var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);</script>
                 </div>
             </div>
 
@@ -79,7 +66,7 @@
             <div class="dashboard-item">
                 <h2 class="dashboard-title-custom">Mapa de Ventas por Vendedor - E-commerce Brasil</h2>
                 <div class="tableau-container">
-                    <div class='tableauPlaceholder' id='viz1732851655651' style='position: relative'><noscript><a href='#'><img alt='Payment Values ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;54&#47;548GPMFQH&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='path' value='shared&#47;548GPMFQH' /> <param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;54&#47;548GPMFQH&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1732851655651');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+                    <div class='tableauPlaceholder' id='viz1732851655651' style='position: relative'><noscript><a href='#'><img alt='Payment Values ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;54&#47;548GPMFQH&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='path' value='shared&#47;548GPMFQH' /> <param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;54&#47;548GPMFQH&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div><script type='text/javascript'>var divElement = document.getElementById('viz1732851655651'); var vizElement = divElement.getElementsByTagName('object')[0]; vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px'; var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);</script>
                 </div>
             </div>
 
@@ -87,7 +74,7 @@
             <div class="dashboard-item">
                 <h2 class="dashboard-title-custom">Scatterplot de Profit por Estado</h2>
                 <div class="tableau-container">
-                    <div class='tableauPlaceholder' id='viz1732851694255' style='position: relative'><noscript><a href='#'><img alt='Dashboard 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Se&#47;Section_4_17312691502260&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Section_4_17312691502260&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Se&#47;Section_4_17312691502260&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1732851694255');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.minWidth='1320px';vizElement.style.maxWidth='1420px';vizElement.style.width='100%';vizElement.style.minHeight='587px';vizElement.style.maxHeight='887px';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.minWidth='1320px';vizElement.style.maxWidth='1420px';vizElement.style.width='100%';vizElement.style.minHeight='587px';vizElement.style.maxHeight='887px';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.height='827px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+                    <div class='tableauPlaceholder' id='viz1732851694255' style='position: relative'><noscript><a href='#'><img alt='Dashboard 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Se&#47;Section_4_17312691502260&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Section_4_17312691502260&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Se&#47;Section_4_17312691502260&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div><script type='text/javascript'>var divElement = document.getElementById('viz1732851694255'); var vizElement = divElement.getElementsByTagName('object')[0]; if ( divElement.offsetWidth > 800 ) { vizElement.style.minWidth='1320px';vizElement.style.maxWidth='1420px';vizElement.style.width='100%';vizElement.style.minHeight='587px';vizElement.style.maxHeight='887px';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.minWidth='1320px';vizElement.style.maxWidth='1420px';vizElement.style.width='100%';vizElement.style.minHeight='587px';vizElement.style.maxHeight='887px';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.height='827px';} var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);</script>
                 </div>
             </div>
 
@@ -98,11 +85,15 @@
         </div>
     </section>
 
-    <footer id="contact">
+    <footer>
         <div class="container">
-            <p>&copy; 2025 Sergio Anaya Sánchez. Todos los derechos reservados.</p>
+            <p data-i18n="footer.copy">© 2025 Sergio Anaya Sánchez. Todos los derechos reservados.</p>
         </div>
     </footer>
 
+    <!-- Toast notification -->
+    <div id="toast" class="toast" data-i18n="toast.email">Email copiado al portapapeles</div>
+
+    <script type="module" src="app.js"></script>
 </body>
 </html>

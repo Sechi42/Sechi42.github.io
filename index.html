@@ -9,8 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="images/logo.png" type="image/png">
-    <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Anti-flash: apply saved theme before first paint -->
+    <script>(function(){const t=localStorage.getItem('theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})()</script>
 </head>
 <body>
 
@@ -19,14 +20,26 @@
             <a href="#" class="logo">
                 <img src="images/logo.png" alt="SAS Logo" class="nav-logo">
             </a>
-            <div class="nav-links">
-                <a href="#projects">Proyectos</a>
-                <a href="#architecture">Arquitectura</a>
-                <a href="#contact">Contacto</a>
+
+            <button id="hamburger" class="hamburger" aria-label="Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="nav-links-text">
+                <a href="#projects" data-i18n="nav.projects">Proyectos</a>
+                <a href="#architecture" data-i18n="nav.architecture">Arquitectura</a>
+                <a href="#contact" data-i18n="nav.contact">Contacto</a>
+            </div>
+
+            <div class="nav-links-actions">
                 <span class="nav-divider"></span>
                 <a href="https://www.linkedin.com/in/sergio-anaya-sanchez/" target="_blank" class="nav-social" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
                 <a href="https://github.com/Sechi42" target="_blank" class="nav-social" title="GitHub"><i class="fa-brands fa-github"></i></a>
                 <a href="mailto:sergio.anayads@gmail.com" class="nav-social" title="Email"><i class="fa-solid fa-envelope"></i></a>
+                <button class="theme-toggle nav-toggle-btn" aria-label="Toggle theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button class="lang-toggle nav-toggle-btn" aria-label="Toggle language">EN</button>
             </div>
         </div>
     </nav>
@@ -34,25 +47,33 @@
     <section class="hero">
         <div class="container">
             <img src="images/logo.png" alt="Sergio Anaya Sánchez Logo" class="hero-logo">
+            <div class="opportunity-badge">
+                <span class="pulse-dot"></span>
+                <span data-i18n="hero.badge">Abierto a oportunidades</span>
+            </div>
             <h1>Sergio Anaya Sánchez</h1>
-            <h2>Científico de Datos | Arquitectura Cloud & Optimización</h2>
-            <p class="hero-text">Transformando datos complejos en soluciones escalables y valor de negocio tangible.</p>
+            <h2 data-i18n="hero.subtitle">Científico de Datos | Arquitectura Cloud & Optimización</h2>
+            <p class="hero-text" data-i18n="hero.text">Transformando datos complejos en soluciones escalables y valor de negocio tangible.</p>
             <div class="cta-buttons">
-                <a href="#projects" class="btn btn-primary">Ver Proyectos</a>
-                <a href="utils/Data_Scientist_Sergio_Anaya.pdf" download class="btn btn-secondary">Descargar CV</a>
+                <a href="#projects" class="btn btn-primary" data-i18n="hero.cta.projects">Ver Proyectos</a>
+                <div class="cv-wrapper">
+                    <a href="utils/Data_Scientist_Sergio_Anaya.pdf" download class="btn btn-secondary" data-i18n="hero.cta.cv">Descargar CV</a>
+                    <span class="cv-hint" data-i18n="hero.cv.hint">PDF — Actualizado 2025</span>
+                </div>
             </div>
         </div>
     </section>
 
     <section id="architecture" class="architecture">
         <div class="container">
-            <h2 class="section-title">Diseño de Sistemas Complejos</h2>
+            <h2 class="section-title reveal" data-i18n="arch.title">Diseño de Sistemas Complejos</h2>
             <div style="text-align: center;">
-                <p style="color: var(--text-secondary); margin-bottom: 2rem;">
-                    Arquitectura de microservicios y flujos de datos orquestados. Haz clic para ver el diagrama detallado.
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;" data-i18n="arch.subtitle">
+                    Arquitecturas de datos y microservicios. Haz clic para ver el diagrama.
                 </p>
-                <button id="openArchModal" class="btn btn-primary">
-                    <i class="fa-solid fa-network-wired"></i> Ver Diagrama de Sistema
+                <button data-open-modal="archModal" class="btn btn-primary reveal">
+                    <i class="fa-solid fa-network-wired"></i>
+                    <span data-i18n="arch.btn">Ver Diagrama de Sistema</span>
                 </button>
             </div>
         </div>
@@ -60,11 +81,11 @@
 
     <section id="projects" class="projects">
         <div class="container">
-            <h2 class="section-title">Proyectos Destacados</h2>
+            <h2 class="section-title reveal" data-i18n="projects.title">Proyectos Destacados</h2>
             <div class="projects-grid">
-                
-                <!-- Proyecto 1 -->
-                <div class="project-card">
+
+                <!-- Proyecto 1: YSGA-PyRust -->
+                <div class="project-card reveal reveal-d1">
                     <div class="card-image">
                         <img src="images/ysga_swarm.png" alt="YSGA-PyRust Project">
                     </div>
@@ -74,15 +95,17 @@
                             <i class="fa-brands fa-python" title="Python"></i>
                             <i class="fa-solid fa-microchip" title="CUDA/GPU"></i>
                         </div>
-                        <h3>YSGA-PyRust</h3>
-                        <span class="tag">R&D y Optimización</span>
-                        <p>Librería híbrida de metaheurísticas para VRP. Aceleración 50x vs Python puro usando bindings de Rust y paralelismo.</p>
-                        <a href="https://github.com/Sechi42/ysga_pyrust" target="_blank" class="btn-card">Ver en GitHub <i class="fa-brands fa-github"></i></a>
+                        <h3 data-i18n="p1.title">YSGA-PyRust</h3>
+                        <span class="tag" data-i18n="p1.tag">R&D y Optimización</span>
+                        <p data-i18n="p1.desc">Librería híbrida de metaheurísticas para VRP. Aceleración 50x vs Python puro usando bindings de Rust y paralelismo CUDA.</p>
+                        <a href="https://github.com/Sechi42/ysga_pyrust" target="_blank" class="btn-card">
+                            <span data-i18n="p1.btn">Ver en GitHub</span> <i class="fa-brands fa-github"></i>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Proyecto 2 -->
-                <div class="project-card">
+                <!-- Proyecto 2: API Fleet 2.0 -->
+                <div class="project-card reveal reveal-d2">
                     <div class="card-image">
                         <img src="images/fleet_api.png" alt="API Fleet 2.0 Project">
                     </div>
@@ -92,19 +115,14 @@
                             <i class="fa-solid fa-server" title="Terraform"></i>
                             <i class="fa-solid fa-database" title="PostgreSQL"></i>
                         </div>
-                        <h3>API Fleet 2.0</h3>
-                        <span class="tag">Logística Analytics & AWS Serverless</span>
-                        <p>
-                            <strong>Visión de Negocio:</strong> Transformación de telemetría vehicular en un producto de valor agregado que ofrece trazabilidad total a clientes finales, reduciendo significativamente la carga operativa del equipo de monitoreo.
-                            <br><br>
-                            <strong>Implementación:</strong> Diseño de una arquitectura orientada a eventos para procesar flujos de datos en tiempo real y proporcionar información crítica de las unidades asignadas.
-                        </p>
-                        <!-- Sin botón -->
+                        <h3 data-i18n="p2.title">API Fleet 2.0</h3>
+                        <span class="tag" data-i18n="p2.tag">Logística Analytics & AWS Serverless</span>
+                        <p data-i18n-html="p2.desc.html"><strong>Visión de Negocio:</strong> Transformación de telemetría vehicular en un producto de valor agregado con trazabilidad total, reduciendo la carga operativa del equipo de monitoreo.<br><br><strong>Implementación:</strong> Arquitectura orientada a eventos para procesar flujos de datos en tiempo real y proporcionar información crítica de las unidades.</p>
                     </div>
                 </div>
 
-                <!-- Proyecto 3 -->
-                <div class="project-card">
+                <!-- Proyecto 3: Auditoría Inteligente -->
+                <div class="project-card reveal reveal-d3">
                     <div class="card-image">
                         <img src="images/audit_ai.png" alt="Auditoría Inteligente Project">
                     </div>
@@ -112,12 +130,34 @@
                         <div class="card-header">
                             <i class="fa-solid fa-file-contract" title="NLP"></i>
                             <i class="fa-brands fa-google" title="Google APIs"></i>
-                            <i class="fa-solid fa-robot" title="Textract"></i>
+                            <i class="fa-solid fa-robot" title="AWS Textract"></i>
                         </div>
-                        <h3>Auditoría Inteligente</h3>
-                        <span class="tag">Automation</span>
-                        <p>Ecosistema de automatización documental. Extracción OCR/NLP para auditoría comercial y compliance normativo.</p>
-                        <a href="#" id="openAuditModal" class="btn-card">Ver Arquitectura <i class="fa-solid fa-sitemap"></i></a>
+                        <h3 data-i18n="p3.title">Auditoría Inteligente</h3>
+                        <span class="tag" data-i18n="p3.tag">Automation</span>
+                        <p data-i18n="p3.desc">Ecosistema de automatización documental. Extracción OCR/NLP para auditoría comercial y compliance normativo.</p>
+                        <a href="#" data-open-modal="auditModal" class="btn-card">
+                            <span data-i18n="p3.btn">Ver Arquitectura</span> <i class="fa-solid fa-sitemap"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Proyecto 4: Causal Fillups -->
+                <div class="project-card reveal reveal-d1">
+                    <div class="card-image">
+                        <img src="images/causal_fillups.jpeg" alt="Causal Fillups Project">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <i class="fa-solid fa-flask" title="RCT / Causal Inference"></i>
+                            <i class="fa-brands fa-python" title="Python"></i>
+                            <i class="fa-brands fa-aws" title="AWS"></i>
+                        </div>
+                        <h3 data-i18n="p4.title">Causal Fillups</h3>
+                        <span class="tag" data-i18n="p4.tag">Inferencia Causal & ML</span>
+                        <p data-i18n="p4.desc">Sistema que combina RCT, modelo Logit, inferencia causal (ATE/CATE) y Thompson Sampling para reducir robo de diesel en operaciones de flota. Ciclo virtuoso: experimentación → predicción → causalidad → optimización.</p>
+                        <a href="#" data-open-modal="causalModal" class="btn-card">
+                            <span data-i18n="p4.btn">Ver Arquitectura</span> <i class="fa-solid fa-sitemap"></i>
+                        </a>
                     </div>
                 </div>
 
@@ -127,10 +167,10 @@
 
     <section class="dashboards">
         <div class="container">
-            <h2 class="section-title">Dashboards & Analytics</h2>
-            <p class="section-subtitle">Visualización de KPIs operativos en tiempo real. Stack: SQL, Polars, Looker/Streamlit.</p>
-            
-            <div class="laptop-mockup">
+            <h2 class="section-title reveal" data-i18n="dash.title">Dashboards & Analytics</h2>
+            <p class="section-subtitle reveal" data-i18n="dash.subtitle">Visualización de KPIs operativos en tiempo real. Stack: SQL, Polars, Looker/Streamlit.</p>
+
+            <div class="laptop-mockup reveal">
                 <div class="screen">
                     <a href="dashboards.html">
                         <img src="images/dashboard_preview.png" alt="Dashboard Analytics" onerror="this.src='https://placehold.co/800x500/1e293b/FFF?text=Dashboard+Preview'">
@@ -143,23 +183,23 @@
 
     <section id="contact" class="connect">
         <div class="container">
-            <h2 class="section-title">Conectemos</h2>
-            <p class="section-subtitle">¿Interesado en colaborar o discutir sobre datos y arquitectura? Encuéntrame en mis redes.</p>
+            <h2 class="section-title reveal" data-i18n="contact.title">Conectemos</h2>
+            <p class="section-subtitle reveal" data-i18n="contact.subtitle">¿Interesado en colaborar o discutir sobre datos y arquitectura? Encuéntrame en mis redes.</p>
             <div class="social-grid">
-                <a href="https://www.linkedin.com/" target="_blank" class="social-card linkedin">
+                <a href="https://www.linkedin.com/in/sergio-anaya-sanchez/" target="_blank" class="social-card linkedin reveal reveal-d1">
                     <i class="fa-brands fa-linkedin"></i>
                     <span>LinkedIn</span>
-                    <p>Conecta profesionalmente</p>
+                    <p data-i18n="contact.li">Conecta profesionalmente</p>
                 </a>
-                <a href="https://github.com/Sechi42" target="_blank" class="social-card github">
+                <a href="https://github.com/Sechi42" target="_blank" class="social-card github reveal reveal-d2">
                     <i class="fa-brands fa-github"></i>
                     <span>GitHub</span>
-                    <p>Explora mi código</p>
+                    <p data-i18n="contact.gh">Explora mi código</p>
                 </a>
-                <a href="mailto:sergio.anayads@gmail.com" class="social-card gmail">
+                <a href="mailto:sergio.anayads@gmail.com" class="social-card gmail reveal reveal-d3">
                     <i class="fa-solid fa-envelope"></i>
                     <span>Gmail</span>
-                    <p>Contáctame directamente</p>
+                    <p data-i18n="contact.mail">Contáctame directamente</p>
                 </a>
             </div>
         </div>
@@ -167,179 +207,57 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Sergio Anaya Sánchez. Todos los derechos reservados.</p>
+            <p data-i18n="footer.copy">© 2025 Sergio Anaya Sánchez. Todos los derechos reservados.</p>
         </div>
     </footer>
 
-    <!-- Modal para Auditoría Inteligente -->
-    <div id="auditModal" class="modal">
+    <!-- Modal: Auditoría Inteligente -->
+    <div id="auditModal" class="modal" data-modal-key="modal.audit.title">
         <div class="modal-content">
             <span class="close-modal" data-modal="auditModal">&times;</span>
-            <div style="text-align: center; margin-bottom: 1rem;">
-                <img src="images/logo.png" alt="SAS Logo" style="height: 80px; width: auto;">
+            <div class="modal-logo">
+                <img src="images/logo.png" alt="SAS Logo">
             </div>
-            <h2>Arquitectura: Auditoría Inteligente</h2>
-            <div class="mermaid">
-graph TD
-  subgraph "👥 Actores Humanos"
-    COMERCIAL[👤 Comercial]
-    ADMIN[👨‍💼 Admin]
-    OPERADOR[🚚 Operador]
-    CLIENTE[🏢 Cliente]
-    AUDITOR[🔍 Auditor]
-  end
-
-  subgraph "🤖 Actores del Sistema"
-    LAMBDA[⚡ Lambda]
-    SCHEDULER[⏰ Scheduler]
-    TRIGGER[🔔 Trigger BD]
-  end
-
-  subgraph "🔌 Sistemas Externos"
-    PEMEX[🏭 API Proveedores]
-    DRIVE[☁️ Google Drive]
-    SHEETS[📊 Google Sheets]
-    TEXTRACT[🔍 AWS Textract]
-  end
-
-  COMERCIAL -->|Opera| LAMBDA
-  ADMIN -->|Configura| LAMBDA
-  OPERADOR -->|Consulta| SHEETS
-  CLIENTE -->|Responde| COMERCIAL
-  AUDITOR -->|Revisa logs| ADMIN
-
-  LAMBDA -->|Consume| PEMEX
-  LAMBDA -->|Escribe| DRIVE
-  LAMBDA -->|Sincroniza| SHEETS
-  LAMBDA -->|Extrae datos| TEXTRACT
-  LAMBDA -->|Ejecuta| TRIGGER
-
-  SCHEDULER -->|Programa| LAMBDA
-  TRIGGER -->|Valida reglas| LAMBDA
-            </div>
+            <h2 data-i18n="modal.audit.title">Arquitectura: Auditoría Inteligente</h2>
+            <div class="mermaid"></div>
         </div>
     </div>
 
-    <!-- Modal para Arquitectura General -->
-    <div id="archModal" class="modal">
+    <!-- Modal: Arquitectura General (Data Pipeline) -->
+    <div id="archModal" class="modal" data-modal-key="modal.arch.title">
         <div class="modal-content">
             <span class="close-modal" data-modal="archModal">&times;</span>
-            <div style="text-align: center; margin-bottom: 1rem;">
-                <img src="images/logo.png" alt="SAS Logo" style="height: 80px; width: auto;">
+            <div class="modal-logo">
+                <img src="images/logo.png" alt="SAS Logo">
             </div>
-            <h2>Diseño de Sistemas Complejos</h2>
-            <div class="mermaid">
-graph TD
-  subgraph "👥 Actores Humanos"
-    COMERCIAL[👤 Comercial]
-    ADMIN[👨‍💼 Admin]
-    OPERADOR[🚚 Operador]
-    CLIENTE[🏢 Cliente]
-    AUDITOR[🔍 Auditor]
-  end
-
-  subgraph "🤖 Actores del Sistema"
-    LAMBDA[⚡ Lambda]
-    SCHEDULER[⏰ Scheduler]
-    TRIGGER[🔔 Trigger BD]
-  end
-
-  subgraph "🔌 Sistemas Externos"
-    PEMEX[🏭 API Proveedores]
-    DRIVE[☁️ Google Drive]
-    SHEETS[📊 Google Sheets]
-    TEXTRACT[🔍 AWS Textract]
-  end
-
-  COMERCIAL -->|Opera| LAMBDA
-  ADMIN -->|Configura| LAMBDA
-  OPERADOR -->|Consulta| SHEETS
-  CLIENTE -->|Responde| COMERCIAL
-  AUDITOR -->|Revisa logs| ADMIN
-
-  LAMBDA -->|Consume| PEMEX
-  LAMBDA -->|Escribe| DRIVE
-  LAMBDA -->|Sincroniza| SHEETS
-  LAMBDA -->|Extrae datos| TEXTRACT
-  LAMBDA -->|Ejecuta| TRIGGER
-
-  SCHEDULER -->|Programa| LAMBDA
-  TRIGGER -->|Valida reglas| LAMBDA
-            </div>
+            <h2 data-i18n="modal.arch.title">Pipeline de Datos — Diseño General</h2>
+            <div class="mermaid"></div>
         </div>
     </div>
 
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        
-        // Initialize with startOnLoad: false to control rendering manually
-        mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
+    <!-- Modal: Causal Fillups -->
+    <div id="causalModal" class="modal" data-modal-key="modal.causal.title">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="causalModal">&times;</span>
+            <div class="modal-logo">
+                <img src="images/logo.png" alt="SAS Logo">
+            </div>
+            <h2 data-i18n="modal.causal.title">Arquitectura: Causal Fillups</h2>
+            <div class="mermaid"></div>
+        </div>
+    </div>
 
-        // Modal Logic Generic
-        function setupModal(btnId, modalId) {
-            const btn = document.getElementById(btnId);
-            const modal = document.getElementById(modalId);
-            
-            if (btn && modal) {
-                btn.onclick = async function(e) {
-                    e.preventDefault();
-                    modal.style.display = "block";
-                    
-                    // Render mermaid diagram inside the modal when it becomes visible
-                    const mermaidDiv = modal.querySelector('.mermaid');
-                    if (mermaidDiv) {
-                        // Reset processed attribute to force re-render if needed, 
-                        // or just let mermaid handle it. 
-                        // In v10 run() handles unproccesed nodes.
-                        try {
-                            await mermaid.run({ nodes: [mermaidDiv] });
-                        } catch (error) {
-                            console.error("Mermaid render error:", error);
-                        }
-                    }
-                }
-            }
-        }
+    <!-- Floating CTA -->
+    <div id="floatingCta" class="floating-cta">
+        <a href="#contact" class="floating-cta-btn">
+            <i class="fa-solid fa-envelope"></i>
+            <span class="cta-label" data-i18n="fcta.label">Contáctame</span>
+        </a>
+    </div>
 
-        setupModal("openAuditModal", "auditModal");
-        setupModal("openArchModal", "archModal");
+    <!-- Toast notification -->
+    <div id="toast" class="toast" data-i18n="toast.email">Email copiado al portapapeles</div>
 
-        // Close buttons
-        const closeButtons = document.getElementsByClassName("close-modal");
-        for (let i = 0; i < closeButtons.length; i++) {
-            closeButtons[i].onclick = function() {
-                const modalId = this.getAttribute("data-modal");
-                document.getElementById(modalId).style.display = "none";
-            }
-        }
-
-        // Click outside to close
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.style.display = "none";
-            }
-        }
-
-        // Toast Logic
-        function showToast() {
-            const toast = document.getElementById("toast");
-            toast.className = "toast show";
-            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
-        }
-
-        // Mailto Handler
-        const mailLinks = document.querySelectorAll('a[href^="mailto:"]');
-        mailLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                const email = this.getAttribute('href').replace('mailto:', '');
-                navigator.clipboard.writeText(email).then(() => {
-                    showToast();
-                }).catch(err => {
-                    console.error('Error al copiar email: ', err);
-                });
-            });
-        });
-    </script>
-    <div id="toast" class="toast">Email copiado al portapapeles</div>
+    <script type="module" src="app.js"></script>
 </body>
 </html>
