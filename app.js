@@ -11,6 +11,7 @@ mermaid.initialize({
     startOnLoad: false,
     theme: 'dark',
     securityLevel: 'loose',
+    flowchart: { nodeSpacing: 35, rankSpacing: 55, curve: 'basis' },
     themeVariables: {
         primaryColor: '#1e293b',
         primaryTextColor: '#f8fafc',
@@ -23,6 +24,7 @@ mermaid.initialize({
         titleColor: '#f8fafc',
         edgeLabelBackground: '#1e293b',
         fontFamily: 'Inter, sans-serif',
+        fontSize: '14px',
     }
 });
 
@@ -31,242 +33,264 @@ mermaid.initialize({
 const DIAGRAMS = {
     audit: {
         es: `graph TD
-  subgraph "👥 Actores Humanos"
-    COMERCIAL[👤 Comercial]
-    ADMIN[👨‍💼 Admin]
-    OPERADOR[🚚 Operador]
-    CLIENTE[🏢 Cliente]
-    AUDITOR[🔍 Auditor]
+  subgraph HUMANS["👥 Actores Humanos"]
+    COMERCIAL([👤 Comercial])
+    ADMIN([👨‍💼 Admin])
+    OPERADOR([🚚 Operador])
+    CLIENTE([🏢 Cliente])
+    AUDITOR([🔍 Auditor])
   end
 
-  subgraph "🤖 Actores del Sistema"
-    LAMBDA[⚡ Lambda]
-    SCHEDULER[⏰ Scheduler]
-    TRIGGER[🔔 Trigger BD]
+  subgraph SYSTEM["🤖 Orquestación AWS"]
+    SCHEDULER([⏰ EventBridge])
+    LAMBDA[⚡ AWS Lambda<br/>— Hub Central —]
+    TRIGGER[(🔔 DB Trigger)]
   end
 
-  subgraph "🔌 Sistemas Externos"
+  subgraph EXTERNAL["🔌 Servicios Externos"]
     PEMEX[🏭 API Proveedores]
+    TEXTRACT[🔎 AWS Textract<br/>OCR de Facturas]
     DRIVE[☁️ Google Drive]
     SHEETS[📊 Google Sheets]
-    TEXTRACT[🔍 AWS Textract]
   end
 
-  COMERCIAL -->|Opera| LAMBDA
-  ADMIN -->|Configura| LAMBDA
-  OPERADOR -->|Consulta| SHEETS
-  CLIENTE -->|Responde| COMERCIAL
-  AUDITOR -->|Revisa logs| ADMIN
+  CLIENTE     -->|"retroalimenta"| COMERCIAL
+  COMERCIAL   -->|"1 · solicita auditoría"| LAMBDA
+  ADMIN       -->|"2 · configura reglas"| LAMBDA
+  SCHEDULER   -->|"3 · dispara cada hora"| LAMBDA
 
-  LAMBDA -->|Consume| PEMEX
-  LAMBDA -->|Escribe| DRIVE
-  LAMBDA -->|Sincroniza| SHEETS
-  LAMBDA -->|Extrae datos| TEXTRACT
-  LAMBDA -->|Ejecuta| TRIGGER
+  LAMBDA      -->|"4 · consulta precios"| PEMEX
+  LAMBDA      -->|"5 · extrae texto (OCR)"| TEXTRACT
+  LAMBDA      -->|"6 · guarda evidencia"| DRIVE
+  LAMBDA      -->|"7 · actualiza reporte"| SHEETS
+  LAMBDA      -->|"8 · valida reglas"| TRIGGER
+  TRIGGER     -->|"alerta si hay anomalía"| LAMBDA
 
-  SCHEDULER -->|Programa| LAMBDA
-  TRIGGER -->|Valida reglas| LAMBDA`,
+  OPERADOR    -->|"consulta diario"| SHEETS
+  AUDITOR     -->|"revisa logs"| ADMIN
+
+  style HUMANS fill:#F59E0B,color:#000
+  style SYSTEM fill:#1E3A5F,color:#fff
+  style EXTERNAL fill:#0D9488,color:#fff`,
 
         en: `graph TD
-  subgraph "👥 Human Actors"
-    COMERCIAL[👤 Sales Rep]
-    ADMIN[👨‍💼 Admin]
-    OPERADOR[🚚 Operator]
-    CLIENTE[🏢 Client]
-    AUDITOR[🔍 Auditor]
+  subgraph HUMANS["👥 Human Actors"]
+    COMERCIAL([👤 Sales Rep])
+    ADMIN([👨‍💼 Admin])
+    OPERADOR([🚚 Operator])
+    CLIENTE([🏢 Client])
+    AUDITOR([🔍 Auditor])
   end
 
-  subgraph "🤖 System Actors"
-    LAMBDA[⚡ Lambda]
-    SCHEDULER[⏰ Scheduler]
-    TRIGGER[🔔 DB Trigger]
+  subgraph SYSTEM["🤖 AWS Orchestration"]
+    SCHEDULER([⏰ EventBridge])
+    LAMBDA[⚡ AWS Lambda<br/>— Central Hub —]
+    TRIGGER[(🔔 DB Trigger)]
   end
 
-  subgraph "🔌 External Systems"
+  subgraph EXTERNAL["🔌 External Services"]
     PEMEX[🏭 Vendor API]
+    TEXTRACT[🔎 AWS Textract<br/>Invoice OCR]
     DRIVE[☁️ Google Drive]
     SHEETS[📊 Google Sheets]
-    TEXTRACT[🔍 AWS Textract]
   end
 
-  COMERCIAL -->|Operates| LAMBDA
-  ADMIN -->|Configures| LAMBDA
-  OPERADOR -->|Queries| SHEETS
-  CLIENTE -->|Responds to| COMERCIAL
-  AUDITOR -->|Reviews logs| ADMIN
+  CLIENTE     -->|"feedback"| COMERCIAL
+  COMERCIAL   -->|"1 · request audit"| LAMBDA
+  ADMIN       -->|"2 · configure rules"| LAMBDA
+  SCHEDULER   -->|"3 · trigger hourly"| LAMBDA
 
-  LAMBDA -->|Consumes| PEMEX
-  LAMBDA -->|Writes to| DRIVE
-  LAMBDA -->|Syncs| SHEETS
-  LAMBDA -->|Extracts data| TEXTRACT
-  LAMBDA -->|Executes| TRIGGER
+  LAMBDA      -->|"4 · fetch prices"| PEMEX
+  LAMBDA      -->|"5 · extract text (OCR)"| TEXTRACT
+  LAMBDA      -->|"6 · save evidence"| DRIVE
+  LAMBDA      -->|"7 · update report"| SHEETS
+  LAMBDA      -->|"8 · validate rules"| TRIGGER
+  TRIGGER     -->|"alert if anomaly"| LAMBDA
 
-  SCHEDULER -->|Schedules| LAMBDA
-  TRIGGER -->|Validates rules| LAMBDA`
+  OPERADOR    -->|"daily review"| SHEETS
+  AUDITOR     -->|"check logs"| ADMIN
+
+  style HUMANS fill:#F59E0B,color:#000
+  style SYSTEM fill:#1E3A5F,color:#fff
+  style EXTERNAL fill:#0D9488,color:#fff`
     },
 
     arch: {
-        es: `graph TD
-  subgraph "📥 Fuentes de Datos"
-    IOT[🌐 APIs / IoT]
-    DBEXT[🗄️ Bases de Datos]
-    FILES[📁 Archivos / Logs]
+        es: `graph LR
+  subgraph SOURCES["📥 Fuentes"]
+    IOT([🌐 APIs / IoT])
+    DBEXT([🗄️ Bases de Datos])
+    FILES([📁 Archivos / Logs])
   end
 
-  subgraph "⚙️ Ingesta"
-    KAFKA[📨 Message Broker]
-    ETL[🔄 Pipeline ETL / ELT]
+  subgraph INGEST["⚙️ Ingesta"]
+    KAFKA[📨 Kafka<br/>Message Broker]
+    ETL[🔄 Pipeline<br/>ETL / ELT]
     BATCH[📦 Batch Jobs]
   end
 
-  subgraph "🔬 Procesamiento"
-    STREAM[⚡ Stream Processing]
+  subgraph PROCESS["🔬 Procesamiento"]
+    STREAM[⚡ Stream<br/>Processing]
     TRANSFORM[🔀 Transformaciones]
-    FEATURES[🧠 Feature Engineering]
+    FEATURES[🧠 Feature<br/>Engineering]
   end
 
-  subgraph "💾 Almacenamiento"
-    DW[🏗️ Data Warehouse]
-    DL[🌊 Data Lake]
-    CACHE[⚡ Cache]
+  subgraph STORAGE["💾 Almacenamiento"]
+    DW[(🏗️ Redshift<br/>Data Warehouse)]
+    DL[(🌊 S3<br/>Data Lake)]
+    CACHE[(⚡ Redis<br/>Cache)]
   end
 
-  subgraph "📡 Serving"
+  subgraph SERVING["📡 Consumo"]
     API[🔌 REST API]
-    MLAPI[🤖 ML Inference]
+    MLAPI[🤖 SageMaker<br/>ML Inference]
     DASH[📊 Dashboards]
   end
 
-  subgraph "🔭 Monitoreo"
-    METRICS[📈 Métricas]
+  subgraph MONITOR["🔭 Monitoreo"]
+    METRICS[📈 CloudWatch<br/>Métricas]
     ALERTS[🚨 Alertas]
     LOGS[📝 Logs]
   end
 
-  IOT   --> KAFKA
-  DBEXT --> ETL
-  FILES --> BATCH
+  IOT   -->|"eventos"| KAFKA
+  DBEXT -->|"registros"| ETL
+  FILES -->|"lotes"| BATCH
 
-  KAFKA --> STREAM
-  ETL   --> TRANSFORM
-  BATCH --> TRANSFORM
+  KAFKA -->|"stream"| STREAM
+  ETL   -->|"tablas"| TRANSFORM
+  BATCH -->|"tablas"| TRANSFORM
 
-  STREAM    --> FEATURES
-  TRANSFORM --> FEATURES
-  FEATURES  --> DW
-  FEATURES  --> DL
+  STREAM    -->|"features"| FEATURES
+  TRANSFORM -->|"features"| FEATURES
+  FEATURES  -->|"datos limpios"| DW
+  FEATURES  -->|"datos raw"| DL
 
-  DW --> API
-  DL --> MLAPI
-  CACHE --> API
+  DW    -->|"consultas"| API
+  DL    -->|"modelos"| MLAPI
+  CACHE -->|"respuestas rápidas"| API
 
-  API   --> DASH
-  MLAPI --> DASH
+  API   -->|"visualización"| DASH
+  MLAPI -->|"predicciones"| DASH
 
-  DW     --> METRICS
-  STREAM --> ALERTS
-  API    --> LOGS`,
+  DW     -->|"métricas"| METRICS
+  STREAM -->|"anomalías"| ALERTS
+  API    -->|"trazas"| LOGS
 
-        en: `graph TD
-  subgraph "📥 Data Sources"
-    IOT[🌐 APIs / IoT]
-    DBEXT[🗄️ Databases]
-    FILES[📁 Files / Logs]
+  style SOURCES fill:#374151,color:#fff
+  style INGEST  fill:#1E293B,color:#fff
+  style PROCESS fill:#7C3AED,color:#fff
+  style STORAGE fill:#0D9488,color:#fff
+  style SERVING fill:#2563EB,color:#fff
+  style MONITOR fill:#DC2626,color:#fff`,
+
+        en: `graph LR
+  subgraph SOURCES["📥 Sources"]
+    IOT([🌐 APIs / IoT])
+    DBEXT([🗄️ Databases])
+    FILES([📁 Files / Logs])
   end
 
-  subgraph "⚙️ Ingestion"
-    KAFKA[📨 Message Broker]
-    ETL[🔄 ETL / ELT Pipeline]
+  subgraph INGEST["⚙️ Ingestion"]
+    KAFKA[📨 Kafka<br/>Message Broker]
+    ETL[🔄 ETL / ELT<br/>Pipeline]
     BATCH[📦 Batch Jobs]
   end
 
-  subgraph "🔬 Processing"
-    STREAM[⚡ Stream Processing]
+  subgraph PROCESS["🔬 Processing"]
+    STREAM[⚡ Stream<br/>Processing]
     TRANSFORM[🔀 Transformations]
-    FEATURES[🧠 Feature Engineering]
+    FEATURES[🧠 Feature<br/>Engineering]
   end
 
-  subgraph "💾 Storage"
-    DW[🏗️ Data Warehouse]
-    DL[🌊 Data Lake]
-    CACHE[⚡ Cache]
+  subgraph STORAGE["💾 Storage"]
+    DW[(🏗️ Redshift<br/>Data Warehouse)]
+    DL[(🌊 S3<br/>Data Lake)]
+    CACHE[(⚡ Redis<br/>Cache)]
   end
 
-  subgraph "📡 Serving"
+  subgraph SERVING["📡 Serving"]
     API[🔌 REST API]
-    MLAPI[🤖 ML Inference]
+    MLAPI[🤖 SageMaker<br/>ML Inference]
     DASH[📊 Dashboards]
   end
 
-  subgraph "🔭 Monitoring"
-    METRICS[📈 Metrics]
+  subgraph MONITOR["🔭 Monitoring"]
+    METRICS[📈 CloudWatch<br/>Metrics]
     ALERTS[🚨 Alerts]
     LOGS[📝 Logs]
   end
 
-  IOT   --> KAFKA
-  DBEXT --> ETL
-  FILES --> BATCH
+  IOT   -->|"events"| KAFKA
+  DBEXT -->|"records"| ETL
+  FILES -->|"batches"| BATCH
 
-  KAFKA --> STREAM
-  ETL   --> TRANSFORM
-  BATCH --> TRANSFORM
+  KAFKA -->|"stream"| STREAM
+  ETL   -->|"tables"| TRANSFORM
+  BATCH -->|"tables"| TRANSFORM
 
-  STREAM    --> FEATURES
-  TRANSFORM --> FEATURES
-  FEATURES  --> DW
-  FEATURES  --> DL
+  STREAM    -->|"features"| FEATURES
+  TRANSFORM -->|"features"| FEATURES
+  FEATURES  -->|"clean data"| DW
+  FEATURES  -->|"raw data"| DL
 
-  DW --> API
-  DL --> MLAPI
-  CACHE --> API
+  DW    -->|"queries"| API
+  DL    -->|"models"| MLAPI
+  CACHE -->|"fast responses"| API
 
-  API   --> DASH
-  MLAPI --> DASH
+  API   -->|"visualization"| DASH
+  MLAPI -->|"predictions"| DASH
 
-  DW     --> METRICS
-  STREAM --> ALERTS
-  API    --> LOGS`
+  DW     -->|"metrics"| METRICS
+  STREAM -->|"anomalies"| ALERTS
+  API    -->|"traces"| LOGS
+
+  style SOURCES fill:#374151,color:#fff
+  style INGEST  fill:#1E293B,color:#fff
+  style PROCESS fill:#7C3AED,color:#fff
+  style STORAGE fill:#0D9488,color:#fff
+  style SERVING fill:#2563EB,color:#fff
+  style MONITOR fill:#DC2626,color:#fff`
     },
 
     causal: {
         es: `graph TB
-    subgraph CAPA_USUARIO["👤 Capa de Usuario"]
-        APP["App Monitorista (PWA)"]
+    subgraph USER[CapaUsuario]
+        APP[AppMonitoristaPWA]
     end
 
-    subgraph ORQUESTACION["⚙️ Orquestación"]
-        N8N["n8n Workflows"]
-        WEBHOOK["Webhook Trigger"]
-        GMAIL["Gmail API"]
-        LAMBDA_MAP["AWS Lambda Maps"]
+    subgraph ORCH[Orquestacion]
+        WEBHOOK[WebhookTrigger]
+        N8N[n8nWorkflow]
+        GMAIL[GmailAPI]
+        LAMBDA_MAP[AWSLambdaMapaRuta]
     end
 
-    subgraph DATA_SOURCES["📡 Fuentes de Datos"]
-        SAMSARA["Samsara GPS API"]
-        INTRALIX["Varilla Intralix 99.5%"]
-        DISPENSADOR["Dispensador Estación"]
+    subgraph SOURCES[FuentesDatos]
+        SAMSARA[SamsaraGPS]
+        INTRALIX[VarillaIntralix]
+        DISPENSER[Dispensador]
     end
 
-    subgraph PERSISTENCIA["💾 Persistencia"]
-        AURORA["Aurora PostgreSQL (AWS)"]
-        SHEETS["Google Sheets"]
+    subgraph STORE[Persistencia]
+        AURORA[(AuroraPostgreSQL)]
+        SHEETS[GoogleSheets]
     end
 
-    subgraph ML_ENGINE["🧠 Motor ML"]
-        LOGIT["Logit P(falta|features)"]
-        KMEANS["K-Means Operadores"]
-        HAVERSINE["Motor Haversine"]
+    subgraph ML[MotorML]
+        HAVERSINE[MotorHaversine]
+        LOGIT[Logit]
+        KMEANS[KMeans]
     end
 
-    subgraph CAUSAL_ENGINE["🔬 Motor Causal"]
-        ATE["ATE — Efecto Global"]
-        CATE["CATE — Efectos Heterogéneos"]
-        RANKING["Ranking Causal"]
+    subgraph CAUSAL[MotorCausal]
+        ATE[ATE]
+        CATE[CATE]
+        RANKING[RankingCausal]
     end
 
-    subgraph DECISION["🎯 Decisión"]
-        BANDIT["Thompson Sampling / 90-10"]
+    subgraph DECISION[Decision]
+        BANDIT[ThompsonSampling]
     end
 
     APP --> WEBHOOK
@@ -281,60 +305,61 @@ const DIAGRAMS = {
     N8N --> GMAIL
     N8N --> LAMBDA_MAP
     INTRALIX --> AURORA
-    DISPENSADOR --> AURORA
+    DISPENSER --> AURORA
     AURORA --> KMEANS
+    KMEANS --> APP
     AURORA --> ATE
     ATE --> CATE
     CATE --> RANKING
     RANKING --> BANDIT
     BANDIT --> HAVERSINE
-    KMEANS --> APP
+    AURORA --> SHEETS
 
-    style CAPA_USUARIO fill:#F59E0B,color:#000
-    style ORQUESTACION fill:#1E293B,color:#fff
-    style DATA_SOURCES fill:#374151,color:#fff
-    style PERSISTENCIA fill:#0D9488,color:#fff
-    style ML_ENGINE fill:#7C3AED,color:#fff
-    style CAUSAL_ENGINE fill:#DC2626,color:#fff
+    style USER fill:#F59E0B,color:#000
+    style ORCH fill:#1E293B,color:#fff
+    style SOURCES fill:#374151,color:#fff
+    style STORE fill:#0D9488,color:#fff
+    style ML fill:#7C3AED,color:#fff
+    style CAUSAL fill:#DC2626,color:#fff
     style DECISION fill:#16A34A,color:#fff`,
 
         en: `graph TB
-    subgraph CAPA_USUARIO["👤 User Layer"]
-        APP["Monitor App (PWA)"]
+    subgraph USER[UserLayer]
+        APP[MonitorAppPWA]
     end
 
-    subgraph ORQUESTACION["⚙️ Orchestration"]
-        N8N["n8n Workflows"]
-        WEBHOOK["Webhook Trigger"]
-        GMAIL["Gmail API"]
-        LAMBDA_MAP["AWS Lambda Maps"]
+    subgraph ORCH[Orchestration]
+        WEBHOOK[WebhookTrigger]
+        N8N[n8nWorkflow]
+        GMAIL[GmailAPI]
+        LAMBDA_MAP[AWSLambdaRouteMap]
     end
 
-    subgraph DATA_SOURCES["📡 Data Sources"]
-        SAMSARA["Samsara GPS API"]
-        INTRALIX["Intralix Probe 99.5%"]
-        DISPENSADOR["Station Dispenser"]
+    subgraph SOURCES[DataSources]
+        SAMSARA[SamsaraGPS]
+        INTRALIX[IntralixProbe]
+        DISPENSER[Dispenser]
     end
 
-    subgraph PERSISTENCIA["💾 Persistence"]
-        AURORA["Aurora PostgreSQL (AWS)"]
-        SHEETS["Google Sheets"]
+    subgraph STORE[Storage]
+        AURORA[(AuroraPostgreSQL)]
+        SHEETS[GoogleSheets]
     end
 
-    subgraph ML_ENGINE["🧠 ML Engine"]
-        LOGIT["Logit P(theft|features)"]
-        KMEANS["K-Means Operators"]
-        HAVERSINE["Haversine Engine"]
+    subgraph ML[MLEngine]
+        HAVERSINE[HaversineEngine]
+        LOGIT[Logit]
+        KMEANS[KMeans]
     end
 
-    subgraph CAUSAL_ENGINE["🔬 Causal Engine"]
-        ATE["ATE — Global Effect"]
-        CATE["CATE — Heterogeneous Effects"]
-        RANKING["Causal Ranking"]
+    subgraph CAUSAL[CausalEngine]
+        ATE[ATE]
+        CATE[CATE]
+        RANKING[CausalRanking]
     end
 
-    subgraph DECISION["🎯 Decision"]
-        BANDIT["Thompson Sampling / 90-10"]
+    subgraph DECISION[Decision]
+        BANDIT[ThompsonSampling]
     end
 
     APP --> WEBHOOK
@@ -349,21 +374,22 @@ const DIAGRAMS = {
     N8N --> GMAIL
     N8N --> LAMBDA_MAP
     INTRALIX --> AURORA
-    DISPENSADOR --> AURORA
+    DISPENSER --> AURORA
     AURORA --> KMEANS
+    KMEANS --> APP
     AURORA --> ATE
     ATE --> CATE
     CATE --> RANKING
     RANKING --> BANDIT
     BANDIT --> HAVERSINE
-    KMEANS --> APP
+    AURORA --> SHEETS
 
-    style CAPA_USUARIO fill:#F59E0B,color:#000
-    style ORQUESTACION fill:#1E293B,color:#fff
-    style DATA_SOURCES fill:#374151,color:#fff
-    style PERSISTENCIA fill:#0D9488,color:#fff
-    style ML_ENGINE fill:#7C3AED,color:#fff
-    style CAUSAL_ENGINE fill:#DC2626,color:#fff
+    style USER fill:#F59E0B,color:#000
+    style ORCH fill:#1E293B,color:#fff
+    style SOURCES fill:#374151,color:#fff
+    style STORE fill:#0D9488,color:#fff
+    style ML fill:#7C3AED,color:#fff
+    style CAUSAL fill:#DC2626,color:#fff
     style DECISION fill:#16A34A,color:#fff`
     }
 };
@@ -551,9 +577,10 @@ function setTheme(theme) {
         startOnLoad: false,
         theme: theme === 'light' ? 'default' : 'dark',
         securityLevel: 'loose',
+        flowchart: { nodeSpacing: 35, rankSpacing: 55, curve: 'basis' },
         themeVariables: theme === 'light'
-            ? { primaryColor: '#e2e8f0', primaryTextColor: '#0f172a', primaryBorderColor: '#0284c7', lineColor: '#0284c7', fontFamily: 'Inter, sans-serif' }
-            : { primaryColor: '#1e293b', primaryTextColor: '#f8fafc', primaryBorderColor: '#38bdf8', lineColor: '#38bdf8', clusterBkg: '#1e293b', clusterBorder: '#38bdf8', titleColor: '#f8fafc', edgeLabelBackground: '#1e293b', fontFamily: 'Inter, sans-serif' }
+            ? { primaryColor: '#e2e8f0', primaryTextColor: '#0f172a', primaryBorderColor: '#0284c7', lineColor: '#0284c7', fontFamily: 'Inter, sans-serif', fontSize: '14px' }
+            : { primaryColor: '#1e293b', primaryTextColor: '#f8fafc', primaryBorderColor: '#38bdf8', lineColor: '#38bdf8', clusterBkg: '#1e293b', clusterBorder: '#38bdf8', titleColor: '#f8fafc', edgeLabelBackground: '#1e293b', fontFamily: 'Inter, sans-serif', fontSize: '14px' }
     });
 }
 
