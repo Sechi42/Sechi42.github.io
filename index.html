@@ -82,6 +82,29 @@
     <section id="projects" class="projects">
         <div class="container">
             <h2 class="section-title reveal" data-i18n="projects.title">Proyectos Destacados</h2>
+
+            <!-- Proyecto Destacado: Causal Fillups -->
+            <div class="featured-project reveal">
+                <div class="card-image">
+                    <img src="images/causal_fillups.jpeg" alt="Causal Fillups Project">
+                </div>
+                <div class="card-content">
+                    <span class="featured-badge"><i class="fa-solid fa-star"></i> <span data-i18n="p4.featured">Proyecto Destacado</span></span>
+                    <div class="card-header">
+                        <i class="fa-solid fa-flask" title="RCT / Causal Inference"></i>
+                        <i class="fa-brands fa-python" title="Python"></i>
+                        <i class="fa-brands fa-aws" title="AWS"></i>
+                    </div>
+                    <h3 data-i18n="p4.title">Causal Fillups</h3>
+                    <span class="tag" data-i18n="p4.tag">Inferencia Causal & ML</span>
+                    <p data-i18n="p4.desc">Sistema que combina RCT, modelo Logit, inferencia causal (ATE/CATE) y Thompson Sampling para reducir robo de diesel en operaciones de flota. Ciclo virtuoso: experimentación → predicción → causalidad → optimización.</p>
+                    <a href="#" data-open-modal="causalModal" class="btn-card">
+                        <span data-i18n="p4.btn">Ver Arquitectura</span> <i class="fa-solid fa-sitemap"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Otros proyectos -->
             <div class="projects-grid">
 
                 <!-- Proyecto 1: YSGA-PyRust -->
@@ -137,26 +160,6 @@
                         <p data-i18n="p3.desc">Ecosistema de automatización documental. Extracción OCR/NLP para auditoría comercial y compliance normativo.</p>
                         <a href="#" data-open-modal="auditModal" class="btn-card">
                             <span data-i18n="p3.btn">Ver Arquitectura</span> <i class="fa-solid fa-sitemap"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Proyecto 4: Causal Fillups -->
-                <div class="project-card reveal reveal-d1">
-                    <div class="card-image">
-                        <img src="images/causal_fillups.jpeg" alt="Causal Fillups Project">
-                    </div>
-                    <div class="card-content">
-                        <div class="card-header">
-                            <i class="fa-solid fa-flask" title="RCT / Causal Inference"></i>
-                            <i class="fa-brands fa-python" title="Python"></i>
-                            <i class="fa-brands fa-aws" title="AWS"></i>
-                        </div>
-                        <h3 data-i18n="p4.title">Causal Fillups</h3>
-                        <span class="tag" data-i18n="p4.tag">Inferencia Causal & ML</span>
-                        <p data-i18n="p4.desc">Sistema que combina RCT, modelo Logit, inferencia causal (ATE/CATE) y Thompson Sampling para reducir robo de diesel en operaciones de flota. Ciclo virtuoso: experimentación → predicción → causalidad → optimización.</p>
-                        <a href="#" data-open-modal="causalModal" class="btn-card">
-                            <span data-i18n="p4.btn">Ver Arquitectura</span> <i class="fa-solid fa-sitemap"></i>
                         </a>
                     </div>
                 </div>
@@ -243,7 +246,16 @@
                 <img src="images/logo.png" alt="SAS Logo">
             </div>
             <h2 data-i18n="modal.causal.title">Arquitectura: Causal Fillups</h2>
-            <div class="mermaid"></div>
+            <div class="modal-tabs">
+                <button class="modal-tab active" data-tab="diagram" data-i18n="modal.causal.tab.diagram">Diagrama</button>
+                <button class="modal-tab" data-tab="image" data-i18n="modal.causal.tab.image">Imagen Detallada</button>
+            </div>
+            <div class="modal-tab-content" data-content="diagram">
+                <div class="mermaid"></div>
+            </div>
+            <div class="modal-tab-content" data-content="image" style="display:none;">
+                <img src="images/causal_fillups.jpeg" alt="Causal Fillups Architecture" class="modal-detail-img">
+            </div>
         </div>
     </div>
 

@@ -416,6 +416,79 @@ html[data-theme="light"] .architecture {
 /* ========================================
    PROJECTS
    ======================================== */
+
+/* ── Featured / hero project card ── */
+.featured-project {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--accent-color);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 3rem;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 12px 40px -10px rgba(56, 189, 248, 0.18);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.featured-project:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 24px 60px -15px rgba(56, 189, 248, 0.28);
+}
+
+.featured-project .card-image {
+    height: 100%;
+    min-height: 280px;
+}
+
+.featured-project .card-content {
+    padding: 2rem 2.25rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.featured-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0.8rem;
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid var(--accent-color);
+    border-radius: 20px;
+    font-size: 0.72rem;
+    color: var(--accent-color);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    align-self: flex-start;
+}
+
+.featured-project h3 {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.featured-project .card-header {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.featured-project .tag {
+    font-size: 0.78rem;
+    margin-bottom: 1rem;
+}
+
+.featured-project p {
+    flex-grow: 1;
+    margin-bottom: 1.5rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+}
+
+/* ── Regular grid ── */
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
@@ -716,10 +789,14 @@ footer {
 }
 
 .modal-logo {
-    display: block;
+    text-align: center;
+    margin-bottom: 1.25rem;
+}
+
+.modal-logo img {
     height: 68px;
     width: auto;
-    margin: 0 auto 1.25rem;
+    display: inline-block;
 }
 
 .modal-content h2 {
@@ -749,6 +826,49 @@ footer {
 @keyframes modalFadeIn {
     from { opacity: 0; transform: translateY(-16px); }
     to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================
+   MODAL TABS (Causal Fillups)
+   ======================================== */
+.modal-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+    padding-bottom: 0.75rem;
+}
+
+.modal-tab {
+    background: transparent;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    color: var(--text-secondary);
+    padding: 0.45rem 1.1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-family: var(--font-main);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.modal-tab:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.modal-tab.active {
+    background: rgba(56, 189, 248, 0.12);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.modal-detail-img {
+    width: 100%;
+    border-radius: 10px;
+    display: block;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 /* ========================================
@@ -964,6 +1084,13 @@ footer {
     .cv-wrapper { width: 100%; }
 
     /* Projects */
+    .featured-project {
+        grid-template-columns: 1fr;
+        margin-bottom: 2rem;
+    }
+    .featured-project .card-image { min-height: 220px; }
+    .featured-project .card-content { padding: 1.5rem; }
+    .featured-project h3 { font-size: 1.3rem; }
     .projects-grid { grid-template-columns: 1fr; }
 
     /* Modal */

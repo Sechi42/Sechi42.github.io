@@ -418,7 +418,11 @@ const T = {
         // Modals
         'modal.audit.title': 'Arquitectura: Auditoría Inteligente',
         'modal.arch.title':  'Pipeline de Datos — Diseño General',
-        'modal.causal.title':'Arquitectura: Causal Fillups',
+        'modal.causal.title':      'Arquitectura: Causal Fillups',
+        'modal.causal.tab.diagram':'Diagrama',
+        'modal.causal.tab.image':  'Imagen Detallada',
+        // Project featured badge
+        'p4.featured':       'Proyecto Destacado',
         // Toast
         'toast.email':       'Email copiado al portapapeles',
         // Floating CTA
@@ -464,7 +468,10 @@ const T = {
         'footer.copy':       '© {year} Sergio Anaya Sánchez. All rights reserved.',
         'modal.audit.title': 'Architecture: Intelligent Auditing',
         'modal.arch.title':  'Data Pipeline — General Design',
-        'modal.causal.title':'Architecture: Causal Fillups',
+        'modal.causal.title':      'Architecture: Causal Fillups',
+        'modal.causal.tab.diagram':'Diagram',
+        'modal.causal.tab.image':  'Detailed Image',
+        'p4.featured':       'Featured Project',
         'toast.email':       'Email copied to clipboard',
         'fcta.label':        'Contact me',
     }
@@ -556,9 +563,21 @@ async function openModal(modalId) {
     if (!modal) return;
     modal.style.display = 'block';
 
+    // Reset tabs to "diagram" if modal has tabs
+    const tabs = modal.querySelectorAll('.modal-tab');
+    if (tabs.length) {
+        tabs.forEach(t => t.classList.remove('active'));
+        const firstTab = modal.querySelector('[data-tab="diagram"]');
+        if (firstTab) firstTab.classList.add('active');
+        modal.querySelectorAll('.modal-tab-content').forEach(c => {
+            c.style.display = c.dataset.content === 'diagram' ? '' : 'none';
+        });
+    }
+
     const diagramKey  = MODAL_DIAGRAM_MAP[modalId];
     if (!diagramKey) return;
 
+    // Find the mermaid div (may be inside a tab-content wrapper)
     const mermaidDiv = modal.querySelector('.mermaid');
     if (!mermaidDiv) return;
 
@@ -612,6 +631,23 @@ function initModals() {
                 m.style.display = 'none';
             });
         }
+    });
+
+    // Modal tabs (e.g. causalModal diagram/image switch)
+    document.querySelectorAll('.modal-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            const modal   = tab.closest('.modal-content').parentElement;
+            const tabName = tab.dataset.tab;
+
+            // Toggle active class
+            modal.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            // Show/hide content panels
+            modal.querySelectorAll('.modal-tab-content').forEach(panel => {
+                panel.style.display = panel.dataset.content === tabName ? '' : 'none';
+            });
+        });
     });
 }
 
