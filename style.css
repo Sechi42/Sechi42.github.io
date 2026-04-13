@@ -227,16 +227,33 @@ html[data-theme="light"] .nav-toggle-btn {
     background: radial-gradient(circle at 50% 40%, rgba(56, 189, 248, 0.08) 0%, transparent 55%);
 }
 
+.hero .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 html[data-theme="light"] .hero {
     background: radial-gradient(circle at 50% 40%, rgba(2, 132, 199, 0.07) 0%, transparent 55%);
 }
 
+@keyframes logo-entrance {
+    from { opacity: 0; transform: scale(0.8) translateY(20px); }
+    to   { opacity: 1; transform: scale(1)   translateY(0);    }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0);    }
+    50%      { transform: translateY(-10px); }
+}
+
 .hero-logo {
-    height: 220px;
+    height: 280px;
     width: auto;
     margin-bottom: 1.5rem;
-    filter: drop-shadow(0 0 22px rgba(56, 189, 248, 0.3));
+    filter: drop-shadow(0 0 28px rgba(56, 189, 248, 0.35));
     display: inline-block;
+    animation: logo-entrance 0.9s ease-out, float 4s ease-in-out 0.9s infinite;
 }
 
 .opportunity-badge {
@@ -1070,7 +1087,7 @@ footer {
 
     /* Hero */
     .hero { padding: 7.5rem 0 4rem; }
-    .hero-logo { height: 140px; max-width: 72%; object-fit: contain; }
+    .hero-logo { height: 175px; max-width: 80%; object-fit: contain; }
     .hero h1 { font-size: 1.95rem; }
     .hero h2 { font-size: 1.1rem; }
 
@@ -1116,6 +1133,7 @@ footer {
         transition: none;
     }
     .opportunity-badge .pulse-dot { animation: none; }
+    .hero-logo { animation: none; }
     html { scroll-behavior: auto; }
     .project-card,
     .social-card,
