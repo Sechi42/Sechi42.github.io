@@ -567,7 +567,7 @@ function setTheme(theme) {
         document.documentElement.removeAttribute('data-theme');
     }
 
-    const icon = theme === 'dark' ? 'fa-moon' : 'fa-sun';
+    const icon = theme === 'dark' ? 'fa-moon' : 'fa-lightbulb';
     document.querySelectorAll('.theme-toggle i').forEach(i => {
         i.className = `fa-solid ${icon}`;
     });
