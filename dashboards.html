@@ -21,11 +21,11 @@
                 <img src="images/logo.png" alt="SAS Logo" class="nav-logo">
             </a>
 
-            <button id="hamburger" class="hamburger" aria-label="Menu">
-                <i class="fa-solid fa-bars"></i>
+            <button id="hamburger" type="button" class="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="primaryNav">
+                <i class="fa-solid fa-bars" aria-hidden="true"></i>
             </button>
 
-            <div class="nav-links-text">
+            <div class="nav-links-text" id="primaryNav">
                 <a href="index.html#projects" data-i18n="nav.projects">Proyectos</a>
                 <a href="index.html#architecture" data-i18n="nav.architecture">Arquitectura</a>
                 <a href="index.html#contact" data-i18n="nav.contact">Contacto</a>
@@ -44,42 +44,112 @@
         </div>
     </nav>
 
-    <section class="hero" style="padding-bottom: 2rem; min-height: auto;">
+    <section class="hero hero--split">
         <div class="container">
-            <h1>Dashboards Profesionales</h1>
-            <p class="hero-text">Análisis visuales interactivos desarrollados en Tableau para la toma de decisiones estratégicas.</p>
+            <div class="hero-copy">
+                <div class="opportunity-badge">
+                    <span class="pulse-dot" aria-hidden="true"></span>
+                    <span data-i18n="dashpage.badge">Galería interactiva</span>
+                </div>
+                <h1 data-i18n="dashpage.title">Dashboards Profesionales</h1>
+                <h2 data-i18n="dashpage.subtitle">Análisis visuales interactivos en Tableau</h2>
+                <p class="hero-text" data-i18n="dashpage.text">Tableros desarrollados en Tableau para la toma de decisiones estratégicas. Explóralos aquí mismo, sin salir del sitio.</p>
+                <div class="cta-buttons">
+                    <a href="#dashboards" class="btn btn-primary" data-i18n="dashpage.cta.explore">Ver Dashboards</a>
+                    <a href="index.html" class="btn btn-secondary" data-i18n="dashpage.cta.home">Volver al Inicio</a>
+                </div>
+            </div>
+
+            <!-- Decorative CSS-built data motif, shared with the homepage hero -->
+            <div class="hero-visual" aria-hidden="true">
+                <div class="hero-parallax">
+                    <div class="hero-depth">
+                        <span class="hero-field"></span>
+                        <span class="hero-scan"></span>
+                        <div class="hero-orbit">
+                            <span class="ring ring--outer"></span>
+                            <span class="ring ring--mid"></span>
+                            <span class="ring ring--inner"></span>
+                            <div class="orbit-system">
+                                <span class="node node--a"></span>
+                                <span class="node node--b"></span>
+                                <span class="node node--c"></span>
+                            </div>
+                            <span class="core"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section class="dashboards-list">
+    <section id="dashboards" class="dashboards dashboards-list">
         <div class="container">
+            <h2 class="section-title reveal" data-i18n="dashpage.section.title">Tableros Interactivos</h2>
+
+            <div class="dash-intro reveal">
+                <p class="dash-lead" data-i18n="dashpage.lead">Cada tablero se carga directamente desde Tableau Public. Usa su barra de herramientas para filtrar, resaltar y comparar.</p>
+                <p class="dash-hint">
+                    <i class="fa-solid fa-arrows-left-right" aria-hidden="true"></i>
+                    <span data-i18n="dashpage.hint">En pantallas angostas los tableros anchos se desplazan horizontalmente dentro de su marco; el resto de la página no se mueve.</span>
+                </p>
+                <nav class="dash-jump" aria-label="Ir a un tablero" data-i18n-aria="dashpage.nav.label">
+                    <a class="dash-chip" href="#viz-segmentation">
+                        <span class="dash-chip-index" aria-hidden="true">01</span>
+                        <span data-i18n="dashpage.viz1">Segmentación de Clientes - Banco</span>
+                    </a>
+                    <a class="dash-chip" href="#viz-sales-map">
+                        <span class="dash-chip-index" aria-hidden="true">02</span>
+                        <span data-i18n="dashpage.viz2">Mapa de Ventas por Vendedor - E-commerce Brasil</span>
+                    </a>
+                    <a class="dash-chip" href="#viz-profit-scatter">
+                        <span class="dash-chip-index" aria-hidden="true">03</span>
+                        <span data-i18n="dashpage.viz3">Scatterplot de Profit por Estado</span>
+                    </a>
+                </nav>
+            </div>
 
             <!-- Dashboard 1 -->
-            <div class="dashboard-item">
-                <h2 class="dashboard-title-custom">Segmentación de Clientes - Banco</h2>
-                <div class="tableau-container">
+            <article class="dashboard-item reveal" id="viz-segmentation">
+                <header class="dashboard-head">
+                    <span class="dashboard-index" aria-hidden="true">01</span>
+                    <h3 class="dashboard-title-custom" data-i18n="dashpage.viz1">Segmentación de Clientes - Banco</h3>
+                    <span class="dashboard-source" data-i18n="dashpage.source">Tableau Public</span>
+                </header>
+                <div class="tableau-container" role="region" tabindex="0" data-i18n-aria="a11y.dashboard.viz" aria-label="Tablero interactivo de Tableau. Usa las flechas o desliza horizontalmente para recorrerlo completo.">
                     <div class='tableauPlaceholder' id='viz1732851521615' style='position: relative'><noscript><a href='#'><img alt='Segmentation Dashboard ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;QQ&#47;QQB4MQ24J&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='path' value='shared&#47;QQB4MQ24J' /> <param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;QQ&#47;QQB4MQ24J&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div><script type='text/javascript'>var divElement = document.getElementById('viz1732851521615'); var vizElement = divElement.getElementsByTagName('object')[0]; if ( divElement.offsetWidth > 800 ) { vizElement.style.width='1000px';vizElement.style.height='727px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='1000px';vizElement.style.height='727px';} else { vizElement.style.width='100%';vizElement.style.height='1677px';} var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);</script>
                 </div>
-            </div>
+            </article>
 
             <!-- Dashboard 2 -->
-            <div class="dashboard-item">
-                <h2 class="dashboard-title-custom">Mapa de Ventas por Vendedor - E-commerce Brasil</h2>
-                <div class="tableau-container">
+            <article class="dashboard-item reveal" id="viz-sales-map">
+                <header class="dashboard-head">
+                    <span class="dashboard-index" aria-hidden="true">02</span>
+                    <h3 class="dashboard-title-custom" data-i18n="dashpage.viz2">Mapa de Ventas por Vendedor - E-commerce Brasil</h3>
+                    <span class="dashboard-source" data-i18n="dashpage.source">Tableau Public</span>
+                </header>
+                <div class="tableau-container" role="region" tabindex="0" data-i18n-aria="a11y.dashboard.viz" aria-label="Tablero interactivo de Tableau. Usa las flechas o desliza horizontalmente para recorrerlo completo.">
                     <div class='tableauPlaceholder' id='viz1732851655651' style='position: relative'><noscript><a href='#'><img alt='Payment Values ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;54&#47;548GPMFQH&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='path' value='shared&#47;548GPMFQH' /> <param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;54&#47;548GPMFQH&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div><script type='text/javascript'>var divElement = document.getElementById('viz1732851655651'); var vizElement = divElement.getElementsByTagName('object')[0]; vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px'; var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);</script>
                 </div>
-            </div>
+            </article>
 
             <!-- Dashboard 3 -->
-            <div class="dashboard-item">
-                <h2 class="dashboard-title-custom">Scatterplot de Profit por Estado</h2>
-                <div class="tableau-container">
+            <article class="dashboard-item reveal" id="viz-profit-scatter">
+                <header class="dashboard-head">
+                    <span class="dashboard-index" aria-hidden="true">03</span>
+                    <h3 class="dashboard-title-custom" data-i18n="dashpage.viz3">Scatterplot de Profit por Estado</h3>
+                    <span class="dashboard-source" data-i18n="dashpage.source">Tableau Public</span>
+                </header>
+                <div class="tableau-container" role="region" tabindex="0" data-i18n-aria="a11y.dashboard.viz" aria-label="Tablero interactivo de Tableau. Usa las flechas o desliza horizontalmente para recorrerlo completo.">
                     <div class='tableauPlaceholder' id='viz1732851694255' style='position: relative'><noscript><a href='#'><img alt='Dashboard 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Se&#47;Section_4_17312691502260&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Section_4_17312691502260&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Se&#47;Section_4_17312691502260&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div><script type='text/javascript'>var divElement = document.getElementById('viz1732851694255'); var vizElement = divElement.getElementsByTagName('object')[0]; if ( divElement.offsetWidth > 800 ) { vizElement.style.minWidth='1320px';vizElement.style.maxWidth='1420px';vizElement.style.width='100%';vizElement.style.minHeight='587px';vizElement.style.maxHeight='887px';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.minWidth='1320px';vizElement.style.maxWidth='1420px';vizElement.style.width='100%';vizElement.style.minHeight='587px';vizElement.style.maxHeight='887px';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.height='827px';} var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);</script>
                 </div>
-            </div>
+            </article>
 
-            <div style="text-align: center; margin-top: 2rem;">
-                <a href="index.html" class="btn btn-primary"><i class="fa-solid fa-arrow-left"></i> Volver a la página principal</a>
+            <div class="dash-back reveal">
+                <a href="index.html" class="btn btn-secondary">
+                    <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                    <span data-i18n="dashpage.back">Volver a la página principal</span>
+                </a>
             </div>
 
         </div>
