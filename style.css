@@ -1397,6 +1397,9 @@ footer {
     margin-right: auto;
 }
 
+/* Small footer copy needs AA contrast against the light page surface. */
+html[data-theme="light"] footer { color: var(--text-secondary); }
+
 footer::before {
     content: '';
     position: absolute;
