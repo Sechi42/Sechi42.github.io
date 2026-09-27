@@ -431,6 +431,12 @@ const T = {
         'p4.tag':            'Inferencia Causal & ML',
         'p4.desc':           'Sistema que combina RCT, modelo Logit, inferencia causal (ATE/CATE) y Thompson Sampling para reducir robo de diesel en operaciones de flota. Ciclo virtuoso: experimentación → predicción → causalidad → optimización.',
         'p4.btn':            'Ver Arquitectura',
+        // Image alternative text
+        'p1.alt':            'Mapa de calles de una ciudad con dos rutas vehiculares optimizadas que se encuentran en un nodo central.',
+        'p2.alt':            'Tres vehículos de flota conectados mediante un nodo de red a un panel de gráfico de barras.',
+        'p3.alt':            'Documentos escaneados que avanzan entre filas de datos extraídos hacia una marca de verificación.',
+        'p4.alt':            'Depósito de combustible alimentando dos rutas que terminan en camiones cisterna junto a indicadores de nivel de combustible.',
+        'dash.alt':          'Tres paneles analíticos: un gráfico de líneas, una región resaltada en el mapa y un diagrama de dispersión.',
         // Dashboards section
         'dash.title':        'Dashboards & Analytics',
         'dash.subtitle':     'Visualización de KPIs operativos en tiempo real. Stack: SQL, Polars, Looker/Streamlit.',
@@ -507,6 +513,12 @@ const T = {
         'p4.tag':            'Causal Inference & ML',
         'p4.desc':           'System combining RCT, Logit model, causal inference (ATE/CATE), and Thompson Sampling to reduce diesel theft in fleet operations. Virtuous cycle: experimentation → prediction → causality → optimization.',
         'p4.btn':            'View Architecture',
+        // Image alternative text
+        'p1.alt':            'City street map with two optimized vehicle routes meeting at a central hub node.',
+        'p2.alt':            'Three fleet vehicles connected through a network node to a bar chart panel.',
+        'p3.alt':            'Scanned documents moving through extracted data rows toward a verified check mark.',
+        'p4.alt':            'Fuel depot feeding two routes that end at tanker trucks beside fuel-level indicators.',
+        'dash.alt':          'Three analytics panels: a line chart, a highlighted map region and a scatter plot.',
         'dash.title':        'Dashboards & Analytics',
         'dash.subtitle':     'Real-time operational KPI visualization. Stack: SQL, Polars, Looker/Streamlit.',
         'dash.overlay':      'Explore Dashboards →',
@@ -602,6 +614,12 @@ function setLanguage(lang) {
     document.querySelectorAll('[data-i18n-title]').forEach(el => {
         const key = el.dataset.i18nTitle;
         if (t[key] !== undefined) el.title = t[key];
+    });
+
+    // Image alternative text
+    document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+        const key = el.dataset.i18nAlt;
+        if (t[key] !== undefined) el.alt = t[key];
     });
 
     // Lang toggle button label (show opposite language)

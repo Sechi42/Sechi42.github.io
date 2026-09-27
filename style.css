@@ -15,6 +15,9 @@
     --card-bg: rgba(14, 21, 38, 0.66);
     --card-bg-hover: rgba(19, 29, 52, 0.82);
     --panel-solid: #0b1120;
+    /* Native bed for the contained featured artwork: stays dark navy in both
+       themes so light mode never shows white letterbox bands around it. */
+    --featured-art-bg: #060a14;
     --modal-bg: #0b1120;
     --keyboard-bg: #26324c;
     --keyboard-notch: #3b4a68;
@@ -861,13 +864,26 @@ section {
 .featured-project .card-image {
     height: 100%;
     min-height: 320px;
+    /* The 16:9 artwork is contained, so the tall column keeps a dark navy bed
+       under it in both themes; light mode would otherwise show white bands. */
+    background-color: var(--featured-art-bg);
+}
+
+/* The featured illustration tells its story across the full width (depot ->
+   routes -> delivery points), so a `cover` crop inside the narrow two-column
+   box would cut both ends of that story. `contain` keeps the whole composition
+   visible and lets the card panel fill the leftover space above and below it. */
+.featured-project .card-image img {
+    object-fit: contain;
 }
 
 .featured-project .card-image::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, transparent 45%, var(--panel-solid));
+    /* Only the right edge blends, because the artwork underneath is now
+       contained: the last 3% is empty margin in every source illustration. */
+    background: linear-gradient(90deg, transparent 97%, var(--featured-art-bg));
 }
 
 .featured-project .card-content {
@@ -1146,8 +1162,7 @@ section {
     cursor: pointer;
 }
 
-.screen a::after {
-    content: 'Explorar Dashboards →';
+.screen-overlay {
     font-family: var(--font-main);
     font-weight: 700;
     position: absolute;
@@ -1161,9 +1176,11 @@ section {
     opacity: 0;
     transition: opacity 0.3s ease;
     backdrop-filter: blur(3px);
+    pointer-events: none;
 }
 
-.screen:hover a::after {
+.screen a:hover .screen-overlay,
+.screen a:focus-visible .screen-overlay {
     opacity: 1;
 }
 
@@ -2068,9 +2085,8 @@ footer::before {
 
     .featured-project .card-image { min-height: 220px; }
 
-    .featured-project .card-image::after {
-        background: linear-gradient(180deg, transparent 55%, var(--panel-solid));
-    }
+    /* No bottom fade override here: the contained artwork stops above the card
+       edge, so it keeps the shared right-edge blend from the rules above. */
 
     .featured-project .card-content { padding: 1.5rem; }
     .featured-project h3 { font-size: 1.3rem; }
