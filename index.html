@@ -44,21 +44,40 @@
         </div>
     </nav>
 
-    <section class="hero">
+    <section class="hero hero--split">
         <div class="container">
-            <img src="images/logo.png" alt="Sergio Anaya Sánchez Logo" class="hero-logo">
-            <div class="opportunity-badge">
-                <span class="pulse-dot"></span>
-                <span data-i18n="hero.badge">Abierto a oportunidades</span>
+            <div class="hero-copy">
+                <img src="images/logo.png" alt="Sergio Anaya Sánchez Logo" class="hero-logo">
+                <div class="opportunity-badge">
+                    <span class="pulse-dot"></span>
+                    <span data-i18n="hero.badge">Abierto a oportunidades</span>
+                </div>
+                <h1>Sergio Anaya Sánchez</h1>
+                <h2 data-i18n="hero.subtitle">Científico de Datos | Arquitectura Cloud & Optimización</h2>
+                <p class="hero-text" data-i18n="hero.text">Transformando datos complejos en soluciones escalables y valor de negocio tangible.</p>
+                <div class="cta-buttons">
+                    <a href="#projects" class="btn btn-primary" data-i18n="hero.cta.projects">Ver Proyectos</a>
+                    <div class="cv-wrapper">
+                        <a href="utils/Data_Scientist_Sergio_Anaya.pdf" download class="btn btn-secondary" data-i18n="hero.cta.cv">Descargar CV</a>
+                        <span class="cv-hint" data-i18n="hero.cv.hint">PDF — Actualizado 2025</span>
+                    </div>
+                </div>
             </div>
-            <h1>Sergio Anaya Sánchez</h1>
-            <h2 data-i18n="hero.subtitle">Científico de Datos | Arquitectura Cloud & Optimización</h2>
-            <p class="hero-text" data-i18n="hero.text">Transformando datos complejos en soluciones escalables y valor de negocio tangible.</p>
-            <div class="cta-buttons">
-                <a href="#projects" class="btn btn-primary" data-i18n="hero.cta.projects">Ver Proyectos</a>
-                <div class="cv-wrapper">
-                    <a href="utils/Data_Scientist_Sergio_Anaya.pdf" download class="btn btn-secondary" data-i18n="hero.cta.cv">Descargar CV</a>
-                    <span class="cv-hint" data-i18n="hero.cv.hint">PDF — Actualizado 2025</span>
+
+            <!-- Decorative CSS-built data motif: lattice field, orbit system and core -->
+            <div class="hero-visual" aria-hidden="true">
+                <span class="hero-field"></span>
+                <span class="hero-scan"></span>
+                <div class="hero-orbit">
+                    <span class="ring ring--outer"></span>
+                    <span class="ring ring--mid"></span>
+                    <span class="ring ring--inner"></span>
+                    <div class="orbit-system">
+                        <span class="node node--a"></span>
+                        <span class="node node--b"></span>
+                        <span class="node node--c"></span>
+                    </div>
+                    <span class="core"></span>
                 </div>
             </div>
         </div>
@@ -67,11 +86,11 @@
     <section id="architecture" class="architecture">
         <div class="container">
             <h2 class="section-title reveal" data-i18n="arch.title">Diseño de Sistemas Complejos</h2>
-            <div style="text-align: center;">
-                <p style="color: var(--text-secondary); margin-bottom: 2rem;" data-i18n="arch.subtitle">
+            <div class="arch-panel reveal">
+                <p class="arch-lead" data-i18n="arch.subtitle">
                     Arquitecturas de datos y microservicios. Haz clic para ver el diagrama.
                 </p>
-                <button data-open-modal="archModal" class="btn btn-primary reveal">
+                <button data-open-modal="archModal" class="btn btn-primary">
                     <i class="fa-solid fa-network-wired"></i>
                     <span data-i18n="arch.btn">Ver Diagrama de Sistema</span>
                 </button>
