@@ -401,6 +401,8 @@ const T = {
         'nav.projects':      'Proyectos',
         'nav.architecture':  'Arquitectura',
         'nav.contact':       'Contacto',
+        'nav.menu.open':     'Abrir menú',
+        'nav.menu.close':    'Cerrar menú',
         // Hero
         'hero.badge':        'Abierto a oportunidades',
         'hero.subtitle':     'Científico de Datos | Arquitectura Cloud & Optimización',
@@ -447,6 +449,9 @@ const T = {
         'modal.causal.title':      'Arquitectura: Causal Fillups',
         'modal.causal.tab.diagram':'Diagrama',
         'modal.causal.tab.image':  'Imagen Detallada',
+        'modal.close':             'Cerrar',
+        // Accessible names
+        'a11y.diagram':            'Diagrama de arquitectura. Usa las flechas para desplazarte.',
         // Project featured badge
         'p4.featured':       'Proyecto Destacado',
         // Toast
@@ -458,6 +463,8 @@ const T = {
         'nav.projects':      'Projects',
         'nav.architecture':  'Architecture',
         'nav.contact':       'Contact',
+        'nav.menu.open':     'Open menu',
+        'nav.menu.close':    'Close menu',
         'hero.badge':        'Open to opportunities',
         'hero.subtitle':     'Data Scientist | Cloud Architecture & Optimization',
         'hero.text':         'Turning complex data into scalable solutions and tangible business value.',
@@ -497,6 +504,8 @@ const T = {
         'modal.causal.title':      'Architecture: Causal Fillups',
         'modal.causal.tab.diagram':'Diagram',
         'modal.causal.tab.image':  'Detailed Image',
+        'modal.close':             'Close',
+        'a11y.diagram':            'Architecture diagram. Use the arrow keys to scroll through the full diagram.',
         'p4.featured':       'Featured Project',
         'toast.email':       'Email copied to clipboard',
         'fcta.label':        'Contact me',
@@ -513,6 +522,25 @@ const MODAL_DIAGRAM_MAP = {
     archModal:   'arch',
     causalModal: 'causal',
 };
+
+// ─── MOTION / POINTER CAPABILITY QUERIES ─────────────────────────────────────
+const REDUCED_MOTION_QUERY = window.matchMedia('(prefers-reduced-motion: reduce)');
+const FINE_POINTER_QUERY   = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+const motionAllowed       = () => !REDUCED_MOTION_QUERY.matches;
+const pointerDepthAllowed = () => motionAllowed() && FINE_POINTER_QUERY.matches;
+
+// Static CSS delays that JS sequencing must not override
+const STATIC_REVEAL_DELAY_CLASSES = ['reveal-d1', 'reveal-d2', 'reveal-d3'];
+const REVEAL_STAGGER_MS     = 90;
+const REVEAL_STAGGER_MAX_MS = 360;
+
+// Pointer-depth amplitudes, deliberately small so copy stays legible and
+// links/buttons inside cards remain easy to hit.
+const CARD_MAX_TILT_DEG   = 3;
+const HERO_MAX_TILT_DEG   = 4.5;
+const CARD_GLOW_SHIFT_PX  = 14;
+const HERO_SHIFT_PX       = 16;
 
 // ─── LANGUAGE ─────────────────────────────────────────────────────────────────
 function setLanguage(lang) {
@@ -548,12 +576,28 @@ function setLanguage(lang) {
         btn.textContent = lang === 'es' ? 'EN' : 'ES';
     });
 
+    // Accessible names driven by translation keys
+    document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+        const key = el.dataset.i18nAria;
+        if (t[key] !== undefined) el.setAttribute('aria-label', t[key]);
+    });
+
+    // Hamburger label depends on the current open state
+    updateNavToggleLabel();
+
     // Update modal titles if they're currently showing
     document.querySelectorAll('.modal[data-modal-key]').forEach(modal => {
         const titleKey = modal.dataset.modalKey;
         const titleEl  = modal.querySelector('h2');
         if (titleEl && t[titleKey]) titleEl.textContent = t[titleKey];
     });
+
+    // Text swaps change page height, so refresh the cached scroll geometry
+    if (scrollState.active) {
+        measureScrollMotion();
+        scrollState.lastY = -1;
+        requestScrollFrame();
+    }
 }
 
 // ─── THEME ────────────────────────────────────────────────────────────────────
@@ -585,19 +629,82 @@ function setTheme(theme) {
 }
 
 // ─── MODAL + MERMAID ──────────────────────────────────────────────────────────
-async function openModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (!modal) return;
-    modal.style.display = 'block';
+// Modals are dialogs: they own the focus trap, Escape, backdrop close and give
+// focus back to the control that opened them.
+const modalStack = [];
 
-    // Reset tabs to "diagram" if modal has tabs
-    const tabs = modal.querySelectorAll('.modal-tab');
-    if (tabs.length) {
-        tabs.forEach(t => t.classList.remove('active'));
-        const firstTab = modal.querySelector('[data-tab="diagram"]');
-        if (firstTab) firstTab.classList.add('active');
-        modal.querySelectorAll('.modal-tab-content').forEach(c => {
-            c.style.display = c.dataset.content === 'diagram' ? '' : 'none';
+function getFocusableElements(container) {
+    const selector = 'a[href], area[href], button:not([disabled]), input:not([disabled]), ' +
+        'select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    return Array.from(container.querySelectorAll(selector))
+        .filter(el => el.getClientRects().length > 0);
+}
+
+function setActiveTab(modal, tabName) {
+    const tabs = Array.from(modal.querySelectorAll('.modal-tab'));
+    let matched = false;
+
+    tabs.forEach(tab => {
+        const isActive = tab.dataset.tab === tabName;
+        if (isActive) matched = true;
+        tab.classList.toggle('active', isActive);
+        tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        // Roving tabindex: only the selected tab stays in the tab order
+        tab.tabIndex = isActive ? 0 : -1;
+    });
+
+    if (!matched) return;
+
+    modal.querySelectorAll('.modal-tab-content').forEach(panel => {
+        panel.hidden = panel.dataset.content !== tabName;
+    });
+}
+
+function handleTabListKeys(event, tab) {
+    if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;
+
+    const modal = tab.closest('.modal');
+    if (!modal) return;
+
+    const tabs = Array.from(modal.querySelectorAll('.modal-tab'));
+    if (!tabs.length) return;
+
+    const current = tabs.indexOf(tab);
+    let next = current;
+    if (event.key === 'ArrowRight') next = (current + 1) % tabs.length;
+    if (event.key === 'ArrowLeft')  next = (current - 1 + tabs.length) % tabs.length;
+    if (event.key === 'Home')       next = 0;
+    if (event.key === 'End')        next = tabs.length - 1;
+    if (next === current) return;
+
+    event.preventDefault();
+    setActiveTab(modal, tabs[next].dataset.tab);
+    tabs[next].focus();
+}
+
+async function openModal(modalId, opener) {
+    const modal = document.getElementById(modalId);
+    if (!modal || modalStack.includes(modal)) return;
+
+    modalStack.push(modal);
+    modal.__opener = opener || document.activeElement;
+
+    modal.removeAttribute('aria-hidden');
+    modal.style.display = 'block';
+    modal.classList.add('is-open');
+    document.documentElement.classList.add('modal-open');
+
+    const content = modal.querySelector('.modal-content');
+    if (content && !content.hasAttribute('tabindex')) content.setAttribute('tabindex', '-1');
+
+    // Reset tabbed modals to the diagram view
+    if (modal.querySelector('.modal-tab')) setActiveTab(modal, 'diagram');
+
+    // Move focus into the dialog (close control first, container as fallback)
+    const focusTarget = modal.querySelector('.close-modal') || content;
+    if (focusTarget) {
+        requestAnimationFrame(() => {
+            if (modal.classList.contains('is-open')) focusTarget.focus({ preventScroll: true });
         });
     }
 
@@ -622,9 +729,73 @@ async function openModal(modalId) {
     }
 }
 
-function closeModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) modal.style.display = 'none';
+function restoreOpenerFocus(opener) {
+    if (!opener || typeof opener.focus !== 'function' || !document.contains(opener)) return;
+
+    // Never send focus to a control that lives inside a still-hidden dialog
+    const owningModal = opener.closest ? opener.closest('.modal') : null;
+    if (owningModal && !owningModal.classList.contains('is-open')) return;
+
+    opener.focus({ preventScroll: true });
+}
+
+function closeModal(target) {
+    const modal = typeof target === 'string' ? document.getElementById(target) : target;
+    if (!modal || !modal.classList.contains('is-open')) return;
+
+    const opener = modal.__opener;
+    modal.__opener = null;
+
+    // Move focus out first: aria-hidden must never cover the focused node, and
+    // hiding an ancestor of the focused element would drop focus on <body>.
+    if (opener) {
+        restoreOpenerFocus(opener);
+    } else if (modal.contains(document.activeElement)) {
+        document.activeElement.blur();
+    }
+
+    modal.style.display = 'none';
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+
+    const index = modalStack.indexOf(modal);
+    if (index !== -1) modalStack.splice(index, 1);
+    if (!modalStack.length) document.documentElement.classList.remove('modal-open');
+}
+
+function onModalKeydown(event) {
+    if (!modalStack.length) return;
+
+    const modal   = modalStack[modalStack.length - 1];
+    const content = modal.querySelector('.modal-content') || modal;
+
+    if (event.key === 'Escape') {
+        event.preventDefault();
+        closeModal(modal);
+        return;
+    }
+
+    if (event.key !== 'Tab') return;
+
+    const focusables = getFocusableElements(content);
+    if (!focusables.length) {
+        event.preventDefault();
+        content.focus({ preventScroll: true });
+        return;
+    }
+
+    const first  = focusables[0];
+    const last   = focusables[focusables.length - 1];
+    const active = document.activeElement;
+    const inside = content.contains(active);
+
+    if (event.shiftKey && (!inside || active === first)) {
+        event.preventDefault();
+        last.focus({ preventScroll: true });
+    } else if (!event.shiftKey && (!inside || active === last)) {
+        event.preventDefault();
+        first.focus({ preventScroll: true });
+    }
 }
 
 function initModals() {
@@ -632,7 +803,7 @@ function initModals() {
     document.querySelectorAll('[data-open-modal]').forEach(btn => {
         btn.addEventListener('click', e => {
             e.preventDefault();
-            openModal(btn.dataset.openModal);
+            openModal(btn.dataset.openModal, btn);
         });
     });
 
@@ -644,83 +815,111 @@ function initModals() {
         });
     });
 
-    // Click outside
+    // Click outside the dialog closes the topmost modal
     window.addEventListener('click', e => {
-        if (e.target.classList.contains('modal')) {
-            e.target.style.display = 'none';
-        }
+        if (e.target.classList && e.target.classList.contains('modal')) closeModal(e.target);
     });
 
-    // Escape key
-    window.addEventListener('keydown', e => {
-        if (e.key === 'Escape') {
-            document.querySelectorAll('.modal').forEach(m => {
-                m.style.display = 'none';
-            });
-        }
-    });
+    // Escape + focus trap for the topmost modal
+    document.addEventListener('keydown', onModalKeydown);
 
     // Modal tabs (e.g. causalModal diagram/image switch)
     document.querySelectorAll('.modal-tab').forEach(tab => {
         tab.addEventListener('click', () => {
-            const modal   = tab.closest('.modal-content').parentElement;
-            const tabName = tab.dataset.tab;
-
-            // Toggle active class
-            modal.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-
-            // Show/hide content panels
-            modal.querySelectorAll('.modal-tab-content').forEach(panel => {
-                panel.style.display = panel.dataset.content === tabName ? '' : 'none';
-            });
+            const modal = tab.closest('.modal');
+            if (modal) setActiveTab(modal, tab.dataset.tab);
         });
+        tab.addEventListener('keydown', e => handleTabListKeys(e, tab));
     });
 }
 
-// ─── HAMBURGER ────────────────────────────────────────────────────────────────
+// ─── HAMBURGER (keyboard/ARIA safe disclosure) ────────────────────────────────
+function updateNavToggleLabel() {
+    const hamburger = document.getElementById('hamburger');
+    const navbar    = document.querySelector('.navbar');
+    if (!hamburger || !navbar) return;
+
+    const t = T[currentLang] || T['es'];
+    const open = navbar.classList.contains('nav-open');
+    hamburger.setAttribute('aria-label', open ? t['nav.menu.close'] : t['nav.menu.open']);
+}
+
+function setNavOpen(open, options) {
+    const opts      = options || {};
+    const hamburger = document.getElementById('hamburger');
+    const navbar    = document.querySelector('.navbar');
+    if (!hamburger || !navbar) return;
+
+    navbar.classList.toggle('nav-open', open);
+    hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+
+    const icon = hamburger.querySelector('i');
+    if (icon) icon.className = open ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+
+    updateNavToggleLabel();
+
+    if (opts.restoreFocus) hamburger.focus({ preventScroll: true });
+}
+
 function initHamburger() {
     const hamburger = document.getElementById('hamburger');
     const navbar    = document.querySelector('.navbar');
     if (!hamburger || !navbar) return;
 
+    const navPanel = navbar.querySelector('.nav-links-text');
+    // aria-controls is only valid when the panel it points at exists on this page
+    if (navPanel && navPanel.id) hamburger.setAttribute('aria-controls', navPanel.id);
+    hamburger.setAttribute('aria-expanded', navbar.classList.contains('nav-open') ? 'true' : 'false');
+    updateNavToggleLabel();
+
     hamburger.addEventListener('click', () => {
-        navbar.classList.toggle('nav-open');
-        const icon = hamburger.querySelector('i');
-        if (icon) {
-            icon.className = navbar.classList.contains('nav-open')
-                ? 'fa-solid fa-xmark'
-                : 'fa-solid fa-bars';
-        }
+        setNavOpen(!navbar.classList.contains('nav-open'));
     });
 
     // Close on nav link click
     document.querySelectorAll('.nav-links-text a').forEach(a => {
-        a.addEventListener('click', () => {
-            navbar.classList.remove('nav-open');
-            const icon = hamburger.querySelector('i');
-            if (icon) icon.className = 'fa-solid fa-bars';
-        });
+        a.addEventListener('click', () => setNavOpen(false));
     });
 
     // Close on outside click
     document.addEventListener('click', e => {
-        if (!navbar.contains(e.target)) {
-            navbar.classList.remove('nav-open');
-            const icon = hamburger.querySelector('i');
-            if (icon) icon.className = 'fa-solid fa-bars';
-        }
+        if (!navbar.classList.contains('nav-open')) return;
+        if (navbar.contains(e.target)) return;
+        setNavOpen(false);
+    });
+
+    // Close on Escape and hand focus back to the toggle
+    document.addEventListener('keydown', e => {
+        if (e.key !== 'Escape') return;
+        if (modalStack.length) return;   // an open dialog owns Escape
+        if (!navbar.classList.contains('nav-open')) return;
+        e.preventDefault();
+        setNavOpen(false, { restoreFocus: true });
     });
 }
 
 // ─── SCROLL REVEAL ───────────────────────────────────────────────────────────
+// The observer contract is unchanged: `.reveal` gains `.visible` on first
+// intersection and is then unobserved. Elements that cross the threshold in the
+// same batch additionally get a sequenced delay unless CSS already sets one.
+function applyRevealDelay(el, index) {
+    if (index === 0) return;
+    if (STATIC_REVEAL_DELAY_CLASSES.some(cls => el.classList.contains(cls))) return;
+    el.style.setProperty('--reveal-delay', Math.min(index * REVEAL_STAGGER_MS, REVEAL_STAGGER_MAX_MS) + 'ms');
+}
+
 function initReveal() {
     const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
+        const batch = entries.filter(entry => entry.isIntersecting);
+
+        // Reading order sequencing for everything that entered in the same frame
+        batch.sort((a, b) =>
+            (a.target.compareDocumentPosition(b.target) & Node.DOCUMENT_POSITION_FOLLOWING) ? -1 : 1);
+
+        batch.forEach((entry, index) => {
+            applyRevealDelay(entry.target, index);
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
         });
     }, { threshold: 0.12 });
 
@@ -769,6 +968,320 @@ function initCopyright() {
     });
 }
 
+// ─── SCROLL CHOREOGRAPHY ─────────────────────────────────────────────────────
+// A single rAF loop reads the scroll position and writes CSS custom properties.
+// Layout is never animated: every consumer is transform/opacity only, and
+// section/hero geometry is measured on resize/load instead of per frame.
+const scrollState = {
+    sections: [],
+    hero: null,
+    navbar: null,
+    viewport: 0,
+    scrollable: 1,
+    heroAmplitude: 46,
+    frame: 0,
+    paused: false,
+    lastY: -1,
+    active: false,
+};
+
+const scrollVarCache = new Map();
+
+// Only these sections consume --section-shift in style.css, so they are the
+// only ones measured and written to on every scroll frame.
+const AMBIENT_SECTION_SELECTOR = '.architecture, .projects, .dashboards, .connect';
+
+function setScrollVar(el, name, value) {
+    let cache = scrollVarCache.get(el);
+    if (!cache) {
+        cache = {};
+        scrollVarCache.set(el, cache);
+    }
+    if (cache[name] === value) return;
+    cache[name] = value;
+    el.style.setProperty(name, value);
+}
+
+function measureScrollMotion() {
+    scrollState.viewport    = window.innerHeight || 0;
+    scrollState.scrollable  = Math.max(document.documentElement.scrollHeight - scrollState.viewport, 1);
+    scrollState.heroAmplitude = window.innerWidth > 900 ? 46 : 20;
+
+    scrollState.sections = Array.from(document.querySelectorAll(AMBIENT_SECTION_SELECTOR)).map(el => ({
+        el,
+        top: el.offsetTop,
+        height: el.offsetHeight,
+    }));
+
+    const heroEl = document.querySelector('.hero');
+    scrollState.hero = heroEl
+        ? { el: heroEl, top: heroEl.offsetTop, height: Math.max(heroEl.offsetHeight, 1) }
+        : null;
+
+    // The reading-progress variable is scoped to the navbar, the only consumer,
+    // so the rest of the document tree is never invalidated on scroll.
+    scrollState.navbar = document.querySelector('.navbar');
+}
+
+function paintScrollMotion() {
+    scrollState.frame = 0;
+    if (scrollState.paused) return;
+
+    const root = document.documentElement;
+    const y    = window.scrollY || window.pageYOffset || 0;
+
+    if (y !== scrollState.lastY) {
+        scrollState.lastY     = y;
+        pointerRectsStale     = true;
+
+        if (scrollState.navbar) {
+            setScrollVar(scrollState.navbar, '--page-progress',
+                Math.min(Math.max(y / scrollState.scrollable, 0), 1).toFixed(4));
+        }
+        root.classList.toggle('is-scrolled', y > 24);
+
+        const viewport = scrollState.viewport;
+
+        for (const section of scrollState.sections) {
+            if (section.top + section.height < y - 240) continue;  // scrolled past
+            if (section.top > y + viewport + 240) continue;        // not reached yet
+
+            const range = section.height + viewport;
+            const p     = Math.min(Math.max((y + viewport - section.top) / range, 0), 1);
+            setScrollVar(section.el, '--section-shift', ((p - 0.5) * 28).toFixed(2) + 'px');
+        }
+
+        const hero = scrollState.hero;
+        if (hero && y < hero.top + hero.height) {
+            const heroProgress = Math.min(Math.max(y / hero.height, 0), 1);
+            setScrollVar(hero.el, '--hero-scroll', (heroProgress * scrollState.heroAmplitude).toFixed(2) + 'px');
+            setScrollVar(hero.el, '--hero-fade', (1 - heroProgress * 0.45).toFixed(3));
+        }
+    }
+}
+
+function requestScrollFrame() {
+    if (!scrollState.active || scrollState.frame || scrollState.paused) return;
+    scrollState.frame = requestAnimationFrame(paintScrollMotion);
+}
+
+let motionResizeTimer = 0;
+
+function handleMotionResize() {
+    window.clearTimeout(motionResizeTimer);
+    motionResizeTimer = window.setTimeout(() => {
+        if (!scrollState.active) return;
+        measureScrollMotion();
+        scrollState.lastY = -1;
+        requestScrollFrame();
+    }, 120);
+}
+
+function handleVisibilityChange() {
+    scrollState.paused = document.hidden;
+    document.documentElement.classList.toggle('is-tab-hidden', document.hidden);
+
+    if (document.hidden) {
+        if (scrollState.frame) {
+            cancelAnimationFrame(scrollState.frame);
+            scrollState.frame = 0;
+        }
+        return;
+    }
+
+    if (!scrollState.active) return;
+    measureScrollMotion();
+    scrollState.lastY = -1;
+    requestScrollFrame();
+}
+
+function clearScrollMotion() {
+    if (scrollState.frame) {
+        cancelAnimationFrame(scrollState.frame);
+        scrollState.frame = 0;
+    }
+
+    scrollState.sections.forEach(s => s.el.style.removeProperty('--section-shift'));
+
+    if (scrollState.hero) {
+        scrollState.hero.el.style.removeProperty('--hero-scroll');
+        scrollState.hero.el.style.removeProperty('--hero-fade');
+    }
+
+    if (scrollState.navbar) scrollState.navbar.style.removeProperty('--page-progress');
+
+    document.documentElement.classList.remove('is-scrolled');
+    scrollVarCache.clear();
+}
+
+function initSectionObserver() {
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => entry.target.classList.toggle('is-inview', entry.isIntersecting));
+    }, { rootMargin: '15% 0px 15% 0px' });
+
+    document.querySelectorAll('section').forEach(section => observer.observe(section));
+}
+
+function initScrollMotion() {
+    initSectionObserver();
+
+    // A page loaded in a background tab must not start the loop
+    scrollState.paused = document.hidden;
+    document.documentElement.classList.toggle('is-tab-hidden', document.hidden);
+
+    // Bound once: the handlers themselves check whether motion is active, so a
+    // live preference change can enable the whole layer without rebinding.
+    window.addEventListener('scroll', requestScrollFrame, { passive: true });
+    window.addEventListener('resize', handleMotionResize, { passive: true });
+    window.addEventListener('load', handleMotionResize);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    if (!motionAllowed()) return;
+
+    scrollState.active = true;
+    document.documentElement.classList.add('motion-ok');
+
+    measureScrollMotion();
+    requestScrollFrame();
+}
+
+// ─── POINTER DEPTH ───────────────────────────────────────────────────────────
+// Subtle hero/card depth on fine pointers with motion enabled. Coalesced into
+// one rAF, rect-cached, transform-only, and never intercepting clicks.
+const TILT_SELECTOR = '.project-card, .social-card, .featured-project';
+const DEPTH_VARS = {
+    hero: ['--hero-tilt-x', '--hero-tilt-y', '--hero-shift-x', '--hero-shift-y'],
+    card: ['--tilt-x', '--tilt-y', '--glow-x', '--glow-y'],
+};
+
+let pointerFrame = 0;
+let pointerRectsStale = false;
+const pointerRects = new Map();
+const pendingDepth = new Map();
+
+function clampUnit(value) {
+    if (Number.isNaN(value)) return 0;
+    return value < -1 ? -1 : value > 1 ? 1 : value;
+}
+
+function readPointerRect(el) {
+    if (pointerRectsStale) pointerRects.clear();
+
+    let rect = pointerRects.get(el);
+    if (!rect) {
+        rect = el.getBoundingClientRect();
+        pointerRects.set(el, rect);
+    }
+    return rect;
+}
+
+function paintDepth() {
+    pointerFrame = 0;
+
+    if (document.hidden) {
+        pendingDepth.clear();
+        return;
+    }
+
+    pendingDepth.forEach(({ event, target }, el) => {
+        const rect = readPointerRect(el);
+        if (!rect.width || !rect.height) return;
+
+        const nx = clampUnit(((event.clientX - rect.left) / rect.width) * 2 - 1);
+        const ny = clampUnit(((event.clientY - rect.top) / rect.height) * 2 - 1);
+
+        if (target === 'hero') {
+            el.style.setProperty('--hero-tilt-x', (-ny * HERO_MAX_TILT_DEG).toFixed(2) + 'deg');
+            el.style.setProperty('--hero-tilt-y', (nx * HERO_MAX_TILT_DEG).toFixed(2) + 'deg');
+            el.style.setProperty('--hero-shift-x', (nx * HERO_SHIFT_PX).toFixed(2) + 'px');
+            el.style.setProperty('--hero-shift-y', (ny * HERO_SHIFT_PX).toFixed(2) + 'px');
+            return;
+        }
+
+        el.style.setProperty('--tilt-x', (-ny * CARD_MAX_TILT_DEG).toFixed(2) + 'deg');
+        el.style.setProperty('--tilt-y', (nx * CARD_MAX_TILT_DEG).toFixed(2) + 'deg');
+        el.style.setProperty('--glow-x', (nx * CARD_GLOW_SHIFT_PX).toFixed(2) + 'px');
+        el.style.setProperty('--glow-y', (ny * CARD_GLOW_SHIFT_PX).toFixed(2) + 'px');
+    });
+
+    pendingDepth.clear();
+    pointerRectsStale = false;
+}
+
+function queueDepth(el, event, target) {
+    if (!pointerDepthAllowed()) return;
+    pendingDepth.set(el, { event, target });
+    if (!pointerFrame) pointerFrame = requestAnimationFrame(paintDepth);
+}
+
+function resetDepthTarget(el, target) {
+    (DEPTH_VARS[target] || []).forEach(name => el.style.removeProperty(name));
+}
+
+function clearPointerDepth() {
+    if (pointerFrame) {
+        cancelAnimationFrame(pointerFrame);
+        pointerFrame = 0;
+    }
+
+    pendingDepth.clear();
+    pointerRects.clear();
+
+    document.querySelectorAll('.is-tilting').forEach(el => el.classList.remove('is-tilting'));
+    document.querySelectorAll(TILT_SELECTOR).forEach(el => resetDepthTarget(el, 'card'));
+
+    const hero = document.querySelector('.hero');
+    if (hero) resetDepthTarget(hero, 'hero');
+}
+
+function initPointerDepth() {
+    const hero = document.querySelector('.hero');
+    if (hero) {
+        hero.addEventListener('pointermove', e => queueDepth(hero, e, 'hero'), { passive: true });
+        hero.addEventListener('pointerleave', () => {
+            pendingDepth.delete(hero);
+            resetDepthTarget(hero, 'hero');
+        }, { passive: true });
+    }
+
+    document.querySelectorAll(TILT_SELECTOR).forEach(card => {
+        card.addEventListener('pointerenter', () => {
+            if (pointerDepthAllowed()) card.classList.add('is-tilting');
+        }, { passive: true });
+
+        card.addEventListener('pointermove', e => queueDepth(card, e, 'card'), { passive: true });
+
+        card.addEventListener('pointerleave', () => {
+            pendingDepth.delete(card);
+            card.classList.remove('is-tilting');
+            resetDepthTarget(card, 'card');
+        }, { passive: true });
+    });
+}
+
+// ─── MOTION PREFERENCE CHANGES ───────────────────────────────────────────────
+function handleMotionPreferenceChange() {
+    if (!motionAllowed()) {
+        scrollState.active = false;
+        scrollState.paused = true;
+        document.documentElement.classList.remove('motion-ok', 'is-scrolled');
+        clearScrollMotion();
+        clearPointerDepth();
+        return;
+    }
+
+    if (!scrollState.active) {
+        scrollState.active = true;
+        scrollState.paused = document.hidden;
+        document.documentElement.classList.add('motion-ok');
+        measureScrollMotion();
+        scrollState.lastY = -1;
+        requestScrollFrame();
+    }
+
+    if (!pointerDepthAllowed()) clearPointerDepth();
+}
+
 // ─── BOOTSTRAP ───────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
     // Apply saved theme (anti-flash is in <head> inline script)
@@ -794,7 +1307,14 @@ document.addEventListener('DOMContentLoaded', () => {
     initHamburger();
     initModals();
     initReveal();
+    initScrollMotion();
+    initPointerDepth();
     initFloatingCTA();
     initMailCopy();
     initCopyright();
+
+    // Honour live preference/capability changes without a reload
+    const onPreferenceChange = () => handleMotionPreferenceChange();
+    REDUCED_MOTION_QUERY.addEventListener('change', onPreferenceChange);
+    FINE_POINTER_QUERY.addEventListener('change', onPreferenceChange);
 });
