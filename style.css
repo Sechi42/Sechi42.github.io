@@ -42,8 +42,6 @@
     --glass-border: 1px solid rgba(148, 176, 226, 0.16);
     --grid-line: rgba(120, 160, 220, 0.05);
     --field-line: rgba(120, 165, 230, 0.10);
-    --ring-line: rgba(140, 175, 235, 0.18);
-    --scan-color: rgba(120, 220, 255, 0.42);
     --ambient-cyan: rgba(56, 189, 248, 0.11);
     --ambient-violet: rgba(139, 92, 246, 0.11);
     --glow-cyan: rgba(56, 189, 248, 0.32);
@@ -86,8 +84,6 @@ html[data-theme="light"] {
     --glass-border: 1px solid rgba(15, 30, 60, 0.10);
     --grid-line: rgba(15, 40, 80, 0.045);
     --field-line: rgba(20, 50, 100, 0.09);
-    --ring-line: rgba(20, 50, 100, 0.14);
-    --scan-color: rgba(2, 132, 199, 0.30);
     --ambient-cyan: rgba(2, 132, 199, 0.10);
     --ambient-violet: rgba(124, 58, 237, 0.08);
     --glow-cyan: rgba(2, 132, 199, 0.22);
@@ -469,11 +465,14 @@ section {
 .hero--split .hero-copy > .hero-text { animation-delay: 0.34s; }
 .hero--split .hero-copy > .cta-buttons { animation-delay: 0.42s; }
 
-/* ── CSS-built data motif: lattice field, scan beam, orbit system and core ── */
+/* ── Native SVG story: business sources → one model → one decision ──
+   The geometry is inline in both hero blocks (index.html and dashboards.html
+   deliberately keep a copy); every paint and every timed step lives in this
+   one file so the two pages cannot drift apart. */
 .hero-visual {
     position: relative;
     width: min(100%, 460px);
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 47 / 32;   /* matches the 940 × 640 story viewBox */
     margin-inline: auto;
     display: grid;
     place-items: center;
@@ -505,120 +504,162 @@ section {
 
 .hero-field {
     position: absolute;
-    inset: 4%;
-    border-radius: 30px;
+    inset: 3% 2%;
+    border-radius: 28px;
     background-image:
         repeating-linear-gradient(90deg, var(--field-line) 0 1px, transparent 1px 14px),
         repeating-linear-gradient(0deg, var(--field-line) 0 1px, transparent 1px 14px);
-    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 8%, transparent 74%);
-    mask-image: radial-gradient(circle at 50% 50%, #000 8%, transparent 74%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 12%, transparent 76%);
+    mask-image: radial-gradient(ellipse at 50% 50%, #000 12%, transparent 76%);
     animation: field-drift 24s linear infinite;
 }
 
-.hero-scan {
-    position: absolute;
-    inset: 6%;
-    background: linear-gradient(180deg, transparent 0%, var(--scan-color) 50%, transparent 100%);
-    background-size: 100% 30%;
-    background-repeat: no-repeat;
-    background-position: 0 -40%;
-    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 12%, transparent 76%);
-    mask-image: radial-gradient(circle at 50% 50%, #000 12%, transparent 76%);
-    animation: scan-sweep 8s linear infinite;
-}
-
-.hero-orbit {
+.flow-art {
     position: relative;
-    width: 74%;
-    aspect-ratio: 1 / 1;
-    display: grid;
-    place-items: center;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
 }
 
-.ring {
-    position: absolute;
-    border-radius: 50%;
+/* Surfaces: the model shell and the three source tiles share one treatment */
+.flow-plate,
+.flow-src-plate {
+    fill: var(--panel-solid);
+    stroke: var(--hairline);
+    stroke-width: 2;
 }
 
-.ring--outer {
-    inset: 0;
-    border: 1px dashed var(--ring-line);
-    animation: spin 52s linear infinite;
+/* A source wakes up: its tile takes an accent tint and rim */
+.flow-src-live {
+    fill: var(--accent-color);
+    fill-opacity: 0.1;
+    stroke: var(--accent-color);
+    stroke-width: 2;
+    opacity: 0;
+    filter: drop-shadow(0 0 10px var(--glow-cyan));
 }
 
-.ring--mid {
-    inset: 11%;
-    border: 1px dotted var(--ring-line);
-    animation: spin 78s linear infinite reverse;
+.flow-port { fill: var(--accent-color); }
+
+.flow-ripple {
+    fill: none;
+    stroke: var(--accent-color);
+    stroke-width: 3;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
 }
 
-.ring--inner {
-    inset: 24%;
-    border: 2px solid transparent;
-    border-top-color: var(--accent-color);
-    border-right-color: var(--accent-2);
-    filter: drop-shadow(0 0 8px var(--glow-cyan));
-    animation: spin 9s linear infinite;
+
+/* Icons: bold flat glyphs that stay readable at the mobile width */
+.flow-shape { fill: var(--text-primary); }
+.flow-cut { fill: var(--panel-solid); }
+.flow-accent { fill: var(--accent-color); }
+.flow-accent--line,
+.flow-accent--axis {
+    fill: none;
+    stroke: var(--accent-color);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.flow-icon--fleet .flow-accent--line { stroke-width: 2.6; stroke-dasharray: 8 6; opacity: 0.85; }
+.flow-icon--doc .flow-accent--line { stroke-width: 3.4; }
+.flow-icon--chart .flow-accent--axis { stroke-width: 3.6; }
+.flow-icon--chart .flow-bar--1 { opacity: 0.5; }
+.flow-icon--chart .flow-bar--2 { opacity: 0.75; }
+
+/* Resting wires and the dim model mesh */
+.flow-rail {
+    fill: none;
+    stroke: var(--accent-color);
+    stroke-width: 2;
+    stroke-linecap: round;
+    opacity: 0.26;
+}
+.flow-rail--reject { stroke: var(--accent-2); opacity: 0.2; }
+.flow-rail--selected { stroke-width: 3; opacity: 0.3; }
+
+.flow-net-edge {
+    stroke: var(--text-muted);
+    stroke-width: 1.5;
+    opacity: 0.3;
 }
 
-.orbit-system {
-    position: absolute;
-    inset: 0;
-    animation: spin 24s linear infinite;
+/* Travelling light: one short dash per wire, placed by the motion layer */
+.flow-pulse {
+    fill: none;
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-dasharray: 12 100;
+    stroke-dashoffset: -46;
+    stroke-opacity: 0;
+    opacity: 0.95;
+}
+.flow-pulse--soft { stroke-width: 3; opacity: 0.4; }
+
+/* Nodes, their activation ripple, and the committed decision */
+.flow-dot {
+    fill: var(--accent-color);
+    opacity: 0.5;
+    transform-box: fill-box;
+    transform-origin: center;
 }
 
-.node {
-    position: absolute;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--accent-color);
-    box-shadow: 0 0 16px var(--glow-cyan);
+.flow-halo {
+    fill: none;
+    stroke: var(--accent-2);
+    stroke-width: 2;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
 }
 
-.node--a {
-    top: 5%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.flow-chip {
+    fill: var(--panel-solid);
+    stroke: var(--hairline);
+    stroke-width: 2;
 }
 
-.node--b {
-    top: 62%;
-    left: 97%;
-    transform: translate(-50%, -50%);
-    background: var(--accent-2);
-    box-shadow: 0 0 16px var(--glow-violet);
+.flow-chip-live {
+    fill: var(--accent-color);
+    fill-opacity: 0.12;
+    stroke: var(--accent-color);
+    stroke-width: 3;
+    opacity: 0;
+    filter: drop-shadow(0 0 14px var(--glow-cyan));
 }
 
-.node--c {
-    top: 90%;
-    left: 16%;
-    transform: translate(-50%, -50%);
-    width: 6px;
-    height: 6px;
-    background: var(--accent-2);
-    box-shadow: 0 0 14px var(--glow-violet);
+.flow-chip-halo {
+    fill: none;
+    stroke: var(--accent-color);
+    stroke-width: 3;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
 }
 
-.core {
-    position: relative;
-    width: 30%;
-    aspect-ratio: 1 / 1;
-    border-radius: 50%;
-    background: radial-gradient(circle at 34% 30%, #eaf7ff 0%, var(--accent-color) 34%, var(--accent-2) 80%, transparent 100%);
-    box-shadow: 0 0 70px var(--glow-cyan), inset 0 0 26px rgba(255, 255, 255, 0.35);
-    animation: core-pulse 6s ease-in-out infinite;
+.flow-check {
+    fill: none;
+    stroke: var(--accent-color);
+    stroke-width: 9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
 }
 
-.core::after {
-    content: '';
-    position: absolute;
-    inset: -12%;
-    border-radius: 50%;
-    border: 1px solid var(--accent-color);
-    opacity: 0.4;
-    animation: halo 6s ease-out infinite;
+.flow-reject-dot {
+    fill: none;
+    stroke: var(--accent-2);
+    stroke-width: 3;
+    opacity: 0.35;
 }
+
+.flow-stop-a { stop-color: var(--accent-color); }
+.flow-stop-b { stop-color: var(--accent-2); }
+
 
 /* Opportunity badge */
 .opportunity-badge {
@@ -1878,27 +1919,156 @@ footer::before {
     to   { background-position: 14px 14px, -14px 14px; }
 }
 
-@keyframes scan-sweep {
-    0%   { background-position: 0 -40%; opacity: 0; }
-    12%  { opacity: 0.55; }
-    88%  { opacity: 0.35; }
-    100% { background-position: 0 140%; opacity: 0; }
+/* ══ Story motion: one 12s loop in six timed steps ═════════════════════
+   Every step is a 12s animation whose activity stays inside its own cycle and
+   whose position comes from --flow-delay, so the whole sequence restarts
+   together instead of drifting apart:
+
+     0.00s  the three sources wake and their ports fire
+     0.05s  the first signal leaves a source and travels to the model
+     1.40s  the network reacts, node by node, along the chosen path
+     4.60s  three candidate paths leave the model
+     5.70s  the chosen rail and the decision chip commit, the check draws
+     11.4s  the story releases and the loop starts again
+
+   Only opacity, stroke-dashoffset and transform are animated. */
+@keyframes flow-src-wake {
+    0%   { opacity: 0; }
+    3%   { opacity: 0.95; }
+    82%  { opacity: 0.95; }
+    90%  { opacity: 0; }
+    100% { opacity: 0; }
 }
 
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
+@keyframes flow-port-pop {
+    0%   { opacity: 0.9; transform: scale(0.6); }
+    6%   { opacity: 0;   transform: scale(3.4); }
+    100% { opacity: 0;   transform: scale(3.4); }
 }
 
-@keyframes core-pulse {
-    0%, 100% { transform: scale(1); filter: brightness(1); }
-    50%      { transform: scale(1.05); filter: brightness(1.18); }
+@keyframes flow-send {
+    0%   { stroke-dashoffset: 10;   stroke-opacity: 0; }
+    3%   { stroke-opacity: 1; }
+    12%  { stroke-opacity: 1; }
+    15%  { stroke-dashoffset: -100; stroke-opacity: 0; }
+    100% { stroke-dashoffset: -100; stroke-opacity: 0; }
 }
 
-@keyframes halo {
-    0%   { transform: scale(0.9); opacity: 0.5; }
-    100% { transform: scale(1.8); opacity: 0; }
+@keyframes flow-send-soft {
+    0%   { stroke-dashoffset: 10;   stroke-opacity: 0; }
+    4%   { stroke-opacity: 0.9; }
+    14%  { stroke-opacity: 0.9; }
+    18%  { stroke-dashoffset: -100; stroke-opacity: 0; }
+    100% { stroke-dashoffset: -100; stroke-opacity: 0; }
 }
+
+@keyframes flow-node-lit {
+    0%   { opacity: 0.5; transform: scale(1); }
+    3%   { opacity: 1;   transform: scale(1.3); }
+    9%   { opacity: 1;   transform: scale(1.3); }
+    24%  { opacity: 0.5; transform: scale(1); }
+    100% { opacity: 0.5; transform: scale(1); }
+}
+
+@keyframes flow-node-react {
+    0%   { opacity: 0; transform: scale(0.7); }
+    2%   { opacity: 0.75; }
+    7.5% { opacity: 0; transform: scale(2.6); }
+    100% { opacity: 0; transform: scale(2.6); }
+}
+
+@keyframes flow-rail-lit {
+    0%   { opacity: 0.3; }
+    8%   { opacity: 1; }
+    34%  { opacity: 1; }
+    46%  { opacity: 0.3; }
+    100% { opacity: 0.3; }
+}
+
+@keyframes flow-chip-lit {
+    0%   { opacity: 0; }
+    8%   { opacity: 1; }
+    34%  { opacity: 1; }
+    46%  { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+@keyframes flow-check {
+    0%   { stroke-dashoffset: 100; }
+    10%  { stroke-dashoffset: 0; }
+    34%  { stroke-dashoffset: 0; }
+    46%  { stroke-dashoffset: 100; }
+    100% { stroke-dashoffset: 100; }
+}
+
+
+/* Sources wake; their ports fire as the first signal leaves */
+.flow-src-live {
+    animation: flow-src-wake 12s linear infinite;
+    animation-delay: var(--flow-delay, 0s);
+}
+.flow-ripple,
+.flow-chip-halo {
+    animation: flow-port-pop 12s linear infinite;
+    animation-delay: var(--flow-delay, 0s);
+}
+
+/* Signals and network activations travel as one short dash of light */
+.flow-pulse {
+    animation: flow-send 12s linear infinite;
+    animation-delay: var(--flow-delay, 0s);
+}
+.flow-pulse--soft { animation-name: flow-send-soft; }
+
+/* Node reactions: the dot swells and brightens, a violet ripple leaves it */
+.flow-node--live .flow-dot {
+    animation: flow-node-lit 12s linear infinite;
+    animation-delay: var(--flow-delay, 0s);
+}
+.flow-node--live .flow-halo {
+    animation: flow-node-react 12s linear infinite;
+    animation-delay: var(--flow-delay, 0s);
+}
+
+/* The decision: chosen rail, chip and check commit together, then release */
+.flow-rail--selected {
+    animation: flow-rail-lit 12s linear infinite;
+    animation-delay: var(--flow-delay, 0s);
+}
+.flow-chip-live {
+    animation: flow-chip-lit 12s linear infinite;
+    animation-delay: var(--flow-delay, 0s);
+}
+.flow-check {
+    animation: flow-check 12s linear infinite;
+    animation-delay: var(--flow-delay, 0s);
+}
+
+/* ── Timeline: where each element sits in the 12s loop ── */
+.flow-pulse--n1 { --flow-delay: 0.05s; }
+.flow-pulse--n2 { --flow-delay: 0.35s; }
+.flow-pulse--n3 { --flow-delay: 0.65s; }
+.flow-src--a { --flow-delay: 0s; }
+.flow-src--b { --flow-delay: 0.35s; }
+.flow-src--c { --flow-delay: 0.7s; }
+.flow-pulse--net1 { --flow-delay: 1.4s; }
+.flow-node--in1 { --flow-delay: 1.5s; }
+.flow-pulse--net2 { --flow-delay: 1.5s; }
+.flow-node--in2 { --flow-delay: 1.8s; }
+.flow-node--in3 { --flow-delay: 2.1s; }
+.flow-node--h2 { --flow-delay: 2.8s; }
+.flow-node--h3 { --flow-delay: 2.95s; }
+.flow-pulse--net3 { --flow-delay: 3s; }
+.flow-pulse--net4 { --flow-delay: 3.1s; }
+.flow-node--o2 { --flow-delay: 4.5s; }
+.flow-pulse--out { --flow-delay: 4.6s; }
+.flow-pulse--rej1 { --flow-delay: 4.7s; }
+.flow-pulse--rej2 { --flow-delay: 4.75s; }
+.flow-rail--selected,
+.flow-chip-live { --flow-delay: 5.7s; }
+.flow-check { --flow-delay: 5.9s; }
+.flow-chip-halo { --flow-delay: 6s; }
+
 
 @keyframes modalFadeIn {
     from { opacity: 0; transform: translateY(-16px); }
@@ -1976,7 +2146,7 @@ footer::before {
     }
 
     .hero-visual {
-        width: min(100%, 320px);
+        width: min(100%, 420px);
     }
 }
 
@@ -2060,7 +2230,9 @@ footer::before {
     .hero--split h1 { font-size: clamp(2rem, 8.5vw, 2.6rem); }
     .hero--split h2 { font-size: 1.05rem; }
 
-    .hero-visual { width: min(100%, 260px); }
+    /* Wide enough that the three business glyphs stay legible on phones;
+       100% keeps it inside the container, so it can never overflow. */
+    .hero-visual { width: min(100%, 340px); }
 
     .cta-buttons {
         flex-direction: column;
@@ -2179,13 +2351,9 @@ html.is-scrolled .navbar {
 /* Background tabs: the frame loop stops and the decorative loops are paused */
 html.is-tab-hidden .hero::before,
 html.is-tab-hidden .hero-field,
-html.is-tab-hidden .hero-scan,
-html.is-tab-hidden .ring,
-html.is-tab-hidden .orbit-system,
-html.is-tab-hidden .core,
-html.is-tab-hidden .core::after,
 html.is-tab-hidden .hero-logo,
-html.is-tab-hidden .pulse-dot {
+html.is-tab-hidden .pulse-dot,
+html.is-tab-hidden .flow-art * {
     animation-play-state: paused;
 }
 
@@ -2217,15 +2385,12 @@ html.modal-open {
     .hero::before,
     .hero-visual,
     .hero-field,
-    .hero-scan,
-    .ring,
-    .orbit-system,
-    .core,
-    .core::after,
     .hero-logo,
     .opportunity-badge .pulse-dot,
     .hero:not(.hero--split) .container > *,
-    .hero--split .hero-copy > * {
+    .hero--split .hero-copy > *,
+    .flow-art,
+    .flow-art * {
         animation: none !important;
     }
 
@@ -2253,8 +2418,22 @@ html.modal-open {
         transform: none;
     }
 
-    .hero-scan { opacity: 0.25; }
-    .core::after { opacity: 0.3; }
+    /* The story keeps a complete final frame: light resting in every wire,
+       the chosen path through the network lit and the decision taken, with no
+       staged timing left to wait for. */
+    .flow-pulse {
+        stroke-opacity: 1;
+        stroke-dashoffset: -46;
+    }
+    .flow-pulse--soft { opacity: 0.4; }
+    .flow-src-live { opacity: 1; }
+    .flow-ripple,
+    .flow-chip-halo { opacity: 0; }
+    .flow-node--live .flow-dot { opacity: 1; }
+    .flow-node--live .flow-halo { opacity: 0.35; transform: scale(1.8); }
+    .flow-rail--selected,
+    .flow-chip-live { opacity: 1; }
+    .flow-check { stroke-dashoffset: 0; }
 
     .reveal {
         opacity: 1;

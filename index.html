@@ -64,25 +64,168 @@
                 </div>
             </div>
 
-            <!-- Decorative CSS-built data motif: lattice field, orbit system and core.
-                 Two wrappers keep the scroll parallax and the pointer depth on
-                 separate transform owners instead of fighting the entrance animation. -->
+            <!-- Decorative business-to-AI story, drawn natively in SVG: three
+                 recognisable data sources (fleet telemetry, business documents,
+                 analytics) send light signals that converge on a small geometric
+                 network, which offers three candidate paths and commits to one
+                 decision. Only geometry lives here; every colour and every timed
+                 step lives in style.css. The two wrappers stay the existing
+                 scroll-parallax and pointer-depth transform owners. -->
             <div class="hero-visual" aria-hidden="true">
                 <div class="hero-parallax">
                     <div class="hero-depth">
                         <span class="hero-field"></span>
-                        <span class="hero-scan"></span>
-                        <div class="hero-orbit">
-                            <span class="ring ring--outer"></span>
-                            <span class="ring ring--mid"></span>
-                            <span class="ring ring--inner"></span>
-                            <div class="orbit-system">
-                                <span class="node node--a"></span>
-                                <span class="node node--b"></span>
-                                <span class="node node--c"></span>
-                            </div>
-                            <span class="core"></span>
-                        </div>
+                        <svg class="flow-art" viewBox="0 0 940 640" preserveAspectRatio="xMidYMid meet" focusable="false">
+                            <defs>
+                                <linearGradient id="flowSignal" gradientUnits="userSpaceOnUse" x1="238" y1="0" x2="858" y2="0">
+                                    <stop class="flow-stop-a" offset="0"/>
+                                    <stop class="flow-stop-b" offset="1"/>
+                                </linearGradient>
+                            </defs>
+
+                            <!-- Model shell and its resting edge mesh -->
+                            <g class="flow-model">
+                                <rect class="flow-plate" x="378" y="96" width="352" height="448" rx="28"/>
+                                <g class="flow-net-edges">
+                                    <line class="flow-net-edge" x1="430" y1="230" x2="555" y2="165"/>
+                                    <line class="flow-net-edge" x1="430" y1="230" x2="555" y2="278"/>
+                                    <line class="flow-net-edge" x1="430" y1="230" x2="555" y2="391"/>
+                                    <line class="flow-net-edge" x1="430" y1="230" x2="555" y2="504"/>
+                                    <line class="flow-net-edge" x1="430" y1="335" x2="555" y2="165"/>
+                                    <line class="flow-net-edge" x1="430" y1="335" x2="555" y2="278"/>
+                                    <line class="flow-net-edge" x1="430" y1="335" x2="555" y2="391"/>
+                                    <line class="flow-net-edge" x1="430" y1="335" x2="555" y2="504"/>
+                                    <line class="flow-net-edge" x1="430" y1="440" x2="555" y2="165"/>
+                                    <line class="flow-net-edge" x1="430" y1="440" x2="555" y2="278"/>
+                                    <line class="flow-net-edge" x1="430" y1="440" x2="555" y2="391"/>
+                                    <line class="flow-net-edge" x1="430" y1="440" x2="555" y2="504"/>
+                                    <line class="flow-net-edge" x1="555" y1="165" x2="680" y2="230"/>
+                                    <line class="flow-net-edge" x1="555" y1="165" x2="680" y2="335"/>
+                                    <line class="flow-net-edge" x1="555" y1="165" x2="680" y2="440"/>
+                                    <line class="flow-net-edge" x1="555" y1="278" x2="680" y2="230"/>
+                                    <line class="flow-net-edge" x1="555" y1="278" x2="680" y2="335"/>
+                                    <line class="flow-net-edge" x1="555" y1="278" x2="680" y2="440"/>
+                                    <line class="flow-net-edge" x1="555" y1="391" x2="680" y2="230"/>
+                                    <line class="flow-net-edge" x1="555" y1="391" x2="680" y2="335"/>
+                                    <line class="flow-net-edge" x1="555" y1="391" x2="680" y2="440"/>
+                                    <line class="flow-net-edge" x1="555" y1="504" x2="680" y2="230"/>
+                                    <line class="flow-net-edge" x1="555" y1="504" x2="680" y2="335"/>
+                                    <line class="flow-net-edge" x1="555" y1="504" x2="680" y2="440"/>
+                                </g>
+                                <g class="flow-net-path">
+                                    <path class="flow-pulse flow-pulse--net1" pathLength="100" stroke="url(#flowSignal)" d="M430 335L555 278"/>
+                                    <path class="flow-pulse flow-pulse--net2" pathLength="100" stroke="url(#flowSignal)" d="M430 335L555 391"/>
+                                    <path class="flow-pulse flow-pulse--net3" pathLength="100" stroke="url(#flowSignal)" d="M555 278L680 335"/>
+                                    <path class="flow-pulse flow-pulse--net4" pathLength="100" stroke="url(#flowSignal)" d="M555 391L680 335"/>
+                                </g>
+                            </g>
+
+                            <!-- Signals leaving the three sources -->
+                            <g class="flow-links">
+                                <path class="flow-rail" d="M238 132C300 132 350 170 430 230"/>
+                                <path class="flow-rail" d="M238 320C310 320 362 326 430 335"/>
+                                <path class="flow-rail" d="M238 508C300 508 350 470 430 440"/>
+                                <path class="flow-pulse flow-pulse--n1" pathLength="100" stroke="url(#flowSignal)" d="M238 132C300 132 350 170 430 230"/>
+                                <path class="flow-pulse flow-pulse--n2" pathLength="100" stroke="url(#flowSignal)" d="M238 320C310 320 362 326 430 335"/>
+                                <path class="flow-pulse flow-pulse--n3" pathLength="100" stroke="url(#flowSignal)" d="M238 508C300 508 350 470 430 440"/>
+                            </g>
+                            <!-- Nodes: the chosen path reacts, the rest rest -->
+                            <g class="flow-nodes">
+                                <g class="flow-node flow-node--live flow-node--in1">
+                                    <circle class="flow-halo" cx="430" cy="230" r="13"/>
+                                    <circle class="flow-dot" cx="430" cy="230" r="13"/>
+                                </g>
+                                <g class="flow-node flow-node--live flow-node--in2">
+                                    <circle class="flow-halo" cx="430" cy="335" r="13"/>
+                                    <circle class="flow-dot" cx="430" cy="335" r="13"/>
+                                </g>
+                                <g class="flow-node flow-node--live flow-node--in3">
+                                    <circle class="flow-halo" cx="430" cy="440" r="13"/>
+                                    <circle class="flow-dot" cx="430" cy="440" r="13"/>
+                                </g>
+                                <g class="flow-node">
+                                    <circle class="flow-dot" cx="555" cy="165" r="13"/>
+                                </g>
+                                <g class="flow-node flow-node--live flow-node--h2">
+                                    <circle class="flow-halo" cx="555" cy="278" r="13"/>
+                                    <circle class="flow-dot" cx="555" cy="278" r="13"/>
+                                </g>
+                                <g class="flow-node flow-node--live flow-node--h3">
+                                    <circle class="flow-halo" cx="555" cy="391" r="13"/>
+                                    <circle class="flow-dot" cx="555" cy="391" r="13"/>
+                                </g>
+                                <g class="flow-node">
+                                    <circle class="flow-dot" cx="555" cy="504" r="13"/>
+                                </g>
+                                <g class="flow-node">
+                                    <circle class="flow-dot" cx="680" cy="230" r="13"/>
+                                </g>
+                                <g class="flow-node flow-node--live flow-node--o2">
+                                    <circle class="flow-halo" cx="680" cy="335" r="13"/>
+                                    <circle class="flow-dot" cx="680" cy="335" r="13"/>
+                                </g>
+                                <g class="flow-node">
+                                    <circle class="flow-dot" cx="680" cy="440" r="13"/>
+                                </g>
+                            </g>
+                            <!-- Candidate paths out, one of them taken -->
+                            <g class="flow-outs">
+                                <path class="flow-rail flow-rail--reject" d="M680 230C720 230 754 196 800 150"/>
+                                <path class="flow-rail flow-rail--reject" d="M680 440C720 440 754 474 800 520"/>
+                                <path class="flow-rail flow-rail--selected" d="M680 335H806"/>
+                                <path class="flow-pulse flow-pulse--soft flow-pulse--rej1" pathLength="100" stroke="url(#flowSignal)" d="M680 230C720 230 754 196 800 150"/>
+                                <path class="flow-pulse flow-pulse--soft flow-pulse--rej2" pathLength="100" stroke="url(#flowSignal)" d="M680 440C720 440 754 474 800 520"/>
+                                <path class="flow-pulse flow-pulse--out" pathLength="100" stroke="url(#flowSignal)" d="M680 335H806"/>
+                                <circle class="flow-reject-dot" cx="808" cy="142" r="7"/>
+                                <circle class="flow-reject-dot" cx="808" cy="528" r="7"/>
+                                <g class="flow-decision">
+                                    <circle class="flow-chip-halo" cx="858" cy="335" r="26"/>
+                                    <rect class="flow-chip" x="806" y="281" width="104" height="108" rx="26"/>
+                                    <rect class="flow-chip-live" x="806" y="281" width="104" height="108" rx="26"/>
+                                    <path class="flow-check" pathLength="100" d="M831 337l18 18 31-37"/>
+                                </g>
+                            </g>
+                            <!-- The three business sources, as bold flat glyphs -->
+                            <g class="flow-sources">
+                                <g class="flow-src flow-src--a">
+                                    <rect class="flow-src-plate" x="28" y="72" width="210" height="120" rx="22"/>
+                                    <rect class="flow-src-live" x="28" y="72" width="210" height="120" rx="22"/>
+                                    <g class="flow-icon flow-icon--fleet" transform="translate(109 108) translate(24 23.9) scale(1.45) translate(-24 -23.9)">
+                                            <rect class="flow-shape" x="3" y="10" width="21" height="18" rx="2"/>
+                                            <path class="flow-shape" d="M25 15h6.4l6.4 7.6V28H25z"/>
+                                            <path class="flow-accent flow-accent--line" d="M4 36.5h40"/>
+                                            <circle class="flow-cut" cx="11.5" cy="31" r="5.2"/>
+                                            <circle class="flow-cut" cx="32" cy="31" r="5.2"/>
+                                            <circle class="flow-accent" cx="11.5" cy="31" r="2"/>
+                                            <circle class="flow-accent" cx="32" cy="31" r="2"/>
+                                    </g>
+                                    <circle class="flow-ripple" cx="238" cy="132" r="6"/>
+                                    <circle class="flow-port" cx="238" cy="132" r="5"/>
+                                </g>
+                                <g class="flow-src flow-src--b">
+                                    <rect class="flow-src-plate" x="28" y="260" width="210" height="120" rx="22"/>
+                                    <rect class="flow-src-live" x="28" y="260" width="210" height="120" rx="22"/>
+                                    <g class="flow-icon flow-icon--doc" transform="translate(109 296) translate(23 24) scale(1.45) translate(-23 -24)">
+                                            <path class="flow-shape" d="M13 7h13.6a3 3 0 0 1 2.12.88l6.4 6.4A3 3 0 0 1 36 16.4V38a3 3 0 0 1-3 3H13a3 3 0 0 1-3-3V10a3 3 0 0 1 3-3Z"/>
+                                            <path class="flow-accent flow-accent--line" d="M16 24h15M16 31h15M16 38h9"/>
+                                    </g>
+                                    <circle class="flow-ripple" cx="238" cy="320" r="6"/>
+                                    <circle class="flow-port" cx="238" cy="320" r="5"/>
+                                </g>
+                                <g class="flow-src flow-src--c">
+                                    <rect class="flow-src-plate" x="28" y="448" width="210" height="120" rx="22"/>
+                                    <rect class="flow-src-live" x="28" y="448" width="210" height="120" rx="22"/>
+                                    <g class="flow-icon flow-icon--chart" transform="translate(109 484) translate(23.5 23.5) scale(1.45) translate(-23.5 -23.5)">
+                                            <path class="flow-accent flow-accent--axis" d="M6 9v29h35"/>
+                                            <rect class="flow-accent flow-bar flow-bar--1" x="11" y="27" width="7.5" height="11" rx="1.6"/>
+                                            <rect class="flow-accent flow-bar flow-bar--2" x="21" y="21" width="7.5" height="17" rx="1.6"/>
+                                            <rect class="flow-accent flow-bar flow-bar--3" x="31" y="13" width="7.5" height="25" rx="1.6"/>
+                                    </g>
+                                    <circle class="flow-ripple" cx="238" cy="508" r="6"/>
+                                    <circle class="flow-port" cx="238" cy="508" r="5"/>
+                                </g>
+                            </g>
+                        </svg>
                     </div>
                 </div>
             </div>
