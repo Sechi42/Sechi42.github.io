@@ -2495,3 +2495,316 @@ html.modal-open {
         transition: none;
     }
 }
+
+/* ==========================================================================
+   21. CAREER STORY / PROFILE (index.html)
+   Composition A: one compact narrative lead, the current role as the primary
+   panel with its three practice domains, then the earlier roles on a single
+   connective rail. Everything here is static geometry plus the shared scroll
+   reveal, so section 20 (prefers-reduced-motion) already renders the story
+   complete and still: no keyframes, no scroll-linked value, no pointer depth.
+
+   T2 appends the education and credential column as a second child of
+   .profile-layout. The grid below reserves that adjacent track from 1024px up
+   and `> :only-child` keeps the timeline on the full width while it is the only
+   child, so T1 stands alone as a complete section.
+   ========================================================================== */
+.profile {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Ambient depth for this band. Deliberately not scroll-linked: the section
+   needs no --section-shift entry to stay identical when motion is off. */
+.profile::before {
+    content: '';
+    position: absolute;
+    inset: -15% -10% auto -10%;
+    height: 120%;
+    background:
+        radial-gradient(36% 46% at 16% 22%, var(--ambient-cyan), transparent 68%),
+        radial-gradient(40% 50% at 86% 74%, var(--ambient-violet), transparent 70%);
+    pointer-events: none;
+}
+
+.profile .container {
+    position: relative;
+    z-index: 1;
+}
+
+.profile-lead {
+    max-width: 68ch;
+    margin: -1.5rem auto 3.25rem;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+.profile-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+    align-items: start;
+}
+
+.profile-timeline {
+    /* Rail geometry. The node offset is derived from these two values, so a
+       breakpoint only moves the rail and never repositions each node. */
+    --profile-gutter: 40px;
+    --profile-rail-x: 11px;
+    position: relative;
+    list-style: none;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 0 0 var(--profile-gutter);
+    display: grid;
+    gap: 1.4rem;
+}
+
+/* The connective rail, one continuous line behind every role */
+.profile-timeline::before {
+    content: '';
+    position: absolute;
+    left: var(--profile-rail-x);
+    top: 0.9rem;
+    bottom: 0.9rem;
+    width: 1px;
+    background: linear-gradient(180deg, var(--accent-color), var(--accent-2) 55%, transparent);
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+.profile-entry {
+    position: relative;
+    padding: 1.5rem 1.75rem 1.6rem;
+    background: var(--card-bg);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-card);
+}
+
+/* Timeline node, centred on the rail for both marker sizes */
+.profile-entry::before {
+    content: '';
+    position: absolute;
+    top: 1.8rem;
+    left: calc(var(--profile-rail-x) - var(--profile-gutter) - 5.5px);
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--panel-solid);
+    border: 1px solid var(--text-muted);
+}
+
+/* Current role: same rail, but the panel carries the emphasis */
+.profile-entry--current {
+    padding: 1.85rem 2rem 1.9rem;
+    background: var(--card-bg-hover);
+    border-color: var(--accent-color);
+    box-shadow: 0 30px 66px -38px var(--glow-cyan), var(--shadow-card);
+}
+
+.profile-entry--current::before {
+    top: 2.05rem;
+    left: calc(var(--profile-rail-x) - var(--profile-gutter) - 6.5px);
+    width: 13px;
+    height: 13px;
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 5px var(--ambient-cyan), 0 0 16px var(--glow-cyan);
+}
+
+.profile-entry-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem 0.75rem;
+    margin-bottom: 0.85rem;
+}
+
+.profile-date {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+}
+
+.profile-date-sep {
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.profile-current {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.24rem 0.7rem;
+    border-radius: 999px;
+    background: var(--ambient-cyan);
+    border: 1px solid var(--hairline);
+    color: var(--accent-hover);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.profile-current::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    flex-shrink: 0;
+}
+
+.profile-role {
+    color: var(--text-primary);
+    font-size: clamp(1.15rem, 1.5vw, 1.35rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+}
+
+.profile-entry--current .profile-role {
+    font-size: clamp(1.35rem, 2vw, 1.6rem);
+}
+
+.profile-org {
+    margin-top: 0.2rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.profile-desc {
+    max-width: 64ch;
+    margin-top: 0.7rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.75;
+}
+
+.profile-domains {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.15rem;
+}
+
+.profile-domains li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.85rem;
+    background: var(--band-surface);
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.profile-domains li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-color), var(--accent-2));
+    flex-shrink: 0;
+}
+
+/* T2 slot: the education + credential column becomes the second grid child and
+   takes the adjacent track. While the timeline is the only child it spans both
+   tracks, which keeps the layout hierarchy intact before and after T2. */
+@media (min-width: 1024px) {
+    .profile-layout {
+        grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    }
+
+    .profile-layout > :only-child {
+        grid-column: 1 / -1;
+    }
+}
+
+/* A fourth text link now shares the navbar, so the tablet range tightens a
+   little before the hamburger takes over at 768px. The mobile disclosure panel
+   is excluded on purpose: it keeps its own spacing. */
+@media (min-width: 769px) and (max-width: 900px) {
+    .nav-links-text a {
+        margin-left: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .nav-divider {
+        margin: 0 0.7rem 0 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-lead {
+        margin-bottom: 2.5rem;
+        font-size: 1rem;
+    }
+
+    .profile-timeline {
+        --profile-gutter: 30px;
+        --profile-rail-x: 9px;
+        gap: 1.2rem;
+    }
+
+    .profile-entry {
+        padding: 1.35rem 1.4rem 1.45rem;
+    }
+
+    .profile-entry::before {
+        top: 1.62rem;
+    }
+
+    .profile-entry--current {
+        padding: 1.6rem 1.5rem 1.65rem;
+    }
+
+    .profile-entry--current::before {
+        top: 1.85rem;
+    }
+
+    .profile-entry--current .profile-role {
+        font-size: 1.35rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-timeline {
+        --profile-gutter: 26px;
+        --profile-rail-x: 8px;
+    }
+
+    .profile-entry,
+    .profile-entry--current {
+        padding: 1.25rem 1.2rem 1.3rem;
+    }
+
+    .profile-lead {
+        font-size: 0.98rem;
+    }
+
+    /* Narrow chips read better stacked than wrapped mid-label */
+    .profile-domains {
+        flex-direction: column;
+    }
+
+    .profile-domains li {
+        width: 100%;
+    }
+}

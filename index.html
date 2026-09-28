@@ -26,6 +26,7 @@
             </button>
 
             <div class="nav-links-text" id="primaryNav">
+                <a href="#profile" data-i18n="nav.profile">Trayectoria</a>
                 <a href="#projects" data-i18n="nav.projects">Proyectos</a>
                 <a href="#architecture" data-i18n="nav.architecture">Arquitectura</a>
                 <a href="#contact" data-i18n="nav.contact">Contacto</a>
@@ -227,6 +228,88 @@
                             </g>
                         </svg>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Career story: scientific-method origin, the current Finvivir role as the
+         primary panel with its three practice domains, then the earlier roles on
+         one quiet connective rail. Every line is source-confirmed: no metrics,
+         no invented duties, no logos and no photographs. Motion is limited to
+         the shared scroll reveal plus static connectors, so the story is fully
+         readable under prefers-reduced-motion. The education and credential
+         column joins this layout as an adjacent track (see .profile-layout in
+         style.css), which is why the timeline spans the full width on its own. -->
+    <section id="profile" class="profile">
+        <div class="container">
+            <h2 class="section-title reveal" data-i18n="profile.title">Trayectoria profesional</h2>
+
+            <p class="profile-lead reveal" data-i18n="profile.lead">Formación en nanotecnología y método científico, hoy aplicada a decisiones de negocio: convertir datos dispersos en decisiones verificables.</p>
+
+            <div class="profile-layout">
+                <div class="profile-main">
+                    <ol class="profile-timeline" role="list" data-i18n-aria="profile.timeline.label" aria-label="Experiencia profesional, del rol más reciente al más antiguo">
+
+                        <!-- Current role: subtly dominant panel -->
+                        <li class="profile-entry profile-entry--current reveal">
+                            <div class="profile-entry-head">
+                                <p class="profile-date">
+                                    <time datetime="2026-07" data-i18n="profile.date.jul2026">Jul 2026</time>
+                                    <span class="profile-date-sep" aria-hidden="true">–</span>
+                                    <span data-i18n="profile.date.present">Presente</span>
+                                </p>
+                                <span class="profile-current" data-i18n="profile.current">Rol actual</span>
+                            </div>
+                            <h3 class="profile-role" data-i18n="profile.role.finvivir">Científico de Datos</h3>
+                            <p class="profile-org" data-i18n="profile.org.finvivir">Finvivir</p>
+                            <ul class="profile-domains" role="list" data-i18n-aria="profile.domains.label" aria-label="Áreas de práctica del rol actual">
+                                <li data-i18n="profile.finvivir.d1">Clustering geográfico</li>
+                                <li data-i18n="profile.finvivir.d2">Modelos de scoring</li>
+                                <li data-i18n="profile.finvivir.d3">Evaluación de harness de agentes de IA</li>
+                            </ul>
+                        </li>
+
+                        <!-- Earlier roles: same rail, quieter weight -->
+                        <li class="profile-entry reveal">
+                            <div class="profile-entry-head">
+                                <p class="profile-date">
+                                    <time datetime="2024-12" data-i18n="profile.date.dec2024">Dic 2024</time>
+                                    <span class="profile-date-sep" aria-hidden="true">–</span>
+                                    <time datetime="2026-07" data-i18n="profile.date.jul2026">Jul 2026</time>
+                                </p>
+                            </div>
+                            <h3 class="profile-role" data-i18n="profile.role.topete">Científico de Datos Jr.</h3>
+                            <p class="profile-org" data-i18n="profile.org.topete">Grupo Topete</p>
+                            <p class="profile-desc" data-i18n="profile.desc.topete">Arquitectura de datos, segmentación con modelos de scoring e inferencia causal aplicada a decisiones operativas.</p>
+                        </li>
+
+                        <li class="profile-entry reveal">
+                            <div class="profile-entry-head">
+                                <p class="profile-date">
+                                    <time datetime="2024-11" data-i18n="profile.date.nov2024">Nov 2024</time>
+                                    <span class="profile-date-sep" aria-hidden="true">–</span>
+                                    <time datetime="2025-12" data-i18n="profile.date.dec2025">Dic 2025</time>
+                                </p>
+                            </div>
+                            <h3 class="profile-role" data-i18n="profile.role.outlier">AI Trainer</h3>
+                            <p class="profile-org" data-i18n="profile.org.outlier">Outlier</p>
+                        </li>
+
+                        <li class="profile-entry reveal">
+                            <div class="profile-entry-head">
+                                <p class="profile-date">
+                                    <time datetime="2023-08" data-i18n="profile.date.aug2023">Ago 2023</time>
+                                    <span class="profile-date-sep" aria-hidden="true">–</span>
+                                    <time datetime="2024-01" data-i18n="profile.date.jan2024">Ene 2024</time>
+                                </p>
+                            </div>
+                            <h3 class="profile-role" data-i18n="profile.role.cutonala">Asistente de Investigación</h3>
+                            <p class="profile-org" data-i18n="profile.org.cutonala">CUTonalá</p>
+                            <p class="profile-desc" data-i18n="profile.desc.cutonala">Protocolos de investigación y análisis estadístico de datos.</p>
+                        </li>
+
+                    </ol>
                 </div>
             </div>
         </div>
