@@ -2504,10 +2504,9 @@ html.modal-open {
    reveal, so section 20 (prefers-reduced-motion) already renders the story
    complete and still: no keyframes, no scroll-linked value, no pointer depth.
 
-   T2 appends the education and credential column as a second child of
-   .profile-layout. The grid below reserves that adjacent track from 1024px up
-   and `> :only-child` keeps the timeline on the full width while it is the only
-   child, so T1 stands alone as a complete section.
+   The education and credential column is the second child of .profile-layout,
+   so the grid reserves that adjacent track from 1024px up and `> :only-child`
+   keeps the timeline on the full width whenever the column is absent.
    ========================================================================== */
 .profile {
     position: relative;
@@ -2724,9 +2723,162 @@ html.modal-open {
     flex-shrink: 0;
 }
 
-/* T2 slot: the education + credential column becomes the second grid child and
-   takes the adjacent track. While the timeline is the only child it spans both
-   tracks, which keeps the layout hierarchy intact before and after T2. */
+/* T2 — education + credential column. It reuses the same glass panel, type
+   scale and focus treatment as the timeline, but each record is a compact
+   entry instead of a rail node, so the two tracks read as one family. The
+   credential card is the only gradient-edged accent inside the column. */
+.profile-aside {
+    display: grid;
+    gap: 1.4rem;
+    align-content: start;
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.profile-aside-title {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.profile-education {
+    list-style: none;
+    display: grid;
+    gap: 1rem;
+}
+
+.profile-edu-entry {
+    position: relative;
+    padding: 1.25rem 1.4rem 1.35rem;
+    background: var(--card-bg);
+    border: 1px solid var(--hairline);
+    border-left: 3px solid var(--hairline);
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-card);
+}
+
+/* In-progress degree: same accent as the current role, quieter surface */
+.profile-edu-entry--current {
+    background: var(--card-bg-hover);
+    border-left-color: var(--accent-color);
+    box-shadow: 0 30px 66px -38px var(--glow-cyan), var(--shadow-card);
+}
+
+.profile-edu-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.7rem;
+    margin-bottom: 0.7rem;
+}
+
+.profile-edu-degree {
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+}
+
+.profile-edu-entry--current .profile-edu-degree {
+    font-size: 1.1rem;
+}
+
+.profile-edu-org {
+    margin-top: 0.3rem;
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+/* Credential card: locally hosted official badge linked to its verification
+   page. The card is the whole target, so the badge, title and issuer all read
+   as one clickable credential. */
+.profile-credential {
+    position: relative;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--accent-color);
+    background: var(--card-bg-hover);
+    box-shadow: 0 30px 66px -40px var(--glow-cyan), var(--shadow-card);
+}
+
+.profile-credential-link {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 1.1rem;
+    padding: 1.25rem 1.4rem;
+    border-radius: inherit;
+    color: inherit;
+    text-decoration: none;
+    transition: background 0.3s var(--ease-out);
+}
+
+.profile-credential-link:hover,
+.profile-credential-link:focus-visible {
+    background: var(--ambient-cyan);
+}
+
+.profile-credential-badge {
+    display: block;
+    width: 84px;
+    height: 84px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 12px 24px var(--glow-violet));
+}
+
+.profile-credential-copy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.profile-credential-kind {
+    color: var(--accent-hover);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.profile-credential-name {
+    margin-top: 0.28rem;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.profile-credential-issuer {
+    margin-top: 0.2rem;
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    line-height: 1.45;
+}
+
+.profile-credential-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.7rem;
+    color: var(--accent-hover);
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.profile-credential-cta i {
+    font-size: 0.7rem;
+}
+
+/* From 1024px the education + credential column takes the adjacent track
+   beside the rail. `> :only-child` keeps the timeline on the full width if the
+   column is ever absent, so the layout never depends on this exact child
+   count. */
 @media (min-width: 1024px) {
     .profile-layout {
         grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
@@ -2782,6 +2934,18 @@ html.modal-open {
     .profile-entry--current .profile-role {
         font-size: 1.35rem;
     }
+
+    .profile-aside {
+        gap: 1.2rem;
+    }
+
+    .profile-edu-entry {
+        padding: 1.15rem 1.25rem 1.25rem;
+    }
+
+    .profile-credential-link {
+        padding: 1.15rem 1.25rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -2806,5 +2970,10 @@ html.modal-open {
 
     .profile-domains li {
         width: 100%;
+    }
+
+    .profile-credential-badge {
+        width: 72px;
+        height: 72px;
     }
 }

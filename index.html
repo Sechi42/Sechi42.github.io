@@ -239,8 +239,9 @@
          no invented duties, no logos and no photographs. Motion is limited to
          the shared scroll reveal plus static connectors, so the story is fully
          readable under prefers-reduced-motion. The education and credential
-         column joins this layout as an adjacent track (see .profile-layout in
-         style.css), which is why the timeline spans the full width on its own. -->
+         column follows as the adjacent track (see .profile-layout in
+         style.css): on phones it stacks after the rail, so DOM order already
+         matches the visual order. -->
     <section id="profile" class="profile">
         <div class="container">
             <h2 class="section-title reveal" data-i18n="profile.title">Trayectoria profesional</h2>
@@ -311,6 +312,81 @@
 
                     </ol>
                 </div>
+
+                <!-- Education + verified credential column. On phones it
+                     follows the experience rail in DOM order; from 1024px it
+                     becomes the adjacent track of .profile-layout. The badge
+                     is the official 600x600 Credly artwork hosted locally, and
+                     the card links to its public verification page. Only the
+                     credential name and that link are asserted: no expiry or
+                     current-status claim is made. -->
+                <aside class="profile-aside" aria-labelledby="profile-aside-title">
+                    <h3 class="profile-aside-title" id="profile-aside-title" data-i18n="profile.aside.title">Formación y credenciales</h3>
+
+                    <ol class="profile-education" role="list" data-i18n-aria="profile.edu.label" aria-label="Formación académica, de la más reciente a la más antigua">
+
+                        <li class="profile-edu-entry profile-edu-entry--current reveal">
+                            <div class="profile-edu-head">
+                                <p class="profile-date">
+                                    <time datetime="2025-01" data-i18n="profile.date.jan2025">Ene 2025</time>
+                                    <span class="profile-date-sep" aria-hidden="true">–</span>
+                                    <time datetime="2027-01" data-i18n="profile.date.jan2027">Ene 2027</time>
+                                </p>
+                                <span class="profile-current" data-i18n="profile.edu.inprogress">En curso</span>
+                            </div>
+                            <h4 class="profile-edu-degree" data-i18n="profile.edu.master">Maestría en Ingeniería y Ciencia de Datos</h4>
+                            <p class="profile-edu-org" data-i18n="profile.edu.org.udeg">Universidad de Guadalajara</p>
+                        </li>
+
+                        <li class="profile-edu-entry reveal">
+                            <div class="profile-edu-head">
+                                <p class="profile-date">
+                                    <time datetime="2024-02" data-i18n="profile.date.feb2024">Feb 2024</time>
+                                    <span class="profile-date-sep" aria-hidden="true">–</span>
+                                    <time datetime="2024-09" data-i18n="profile.date.sep2024">Sep 2024</time>
+                                </p>
+                            </div>
+                            <h4 class="profile-edu-degree" data-i18n="profile.edu.bootcamp">Bootcamp Data Scientist</h4>
+                            <p class="profile-edu-org" data-i18n="profile.edu.org.tripleten">TripleTen</p>
+                        </li>
+
+                        <li class="profile-edu-entry reveal">
+                            <div class="profile-edu-head">
+                                <p class="profile-date">
+                                    <time datetime="2019-05" data-i18n="profile.date.may2019">May 2019</time>
+                                    <span class="profile-date-sep" aria-hidden="true">–</span>
+                                    <time datetime="2023-12" data-i18n="profile.date.dec2023">Dic 2023</time>
+                                </p>
+                            </div>
+                            <h4 class="profile-edu-degree" data-i18n="profile.edu.nano">Ingeniería en Nanotecnología</h4>
+                            <p class="profile-edu-org" data-i18n="profile.edu.org.udeg">Universidad de Guadalajara</p>
+                        </li>
+
+                    </ol>
+
+                    <div class="profile-credential reveal">
+                        <a class="profile-credential-link"
+                           href="https://www.credly.com/badges/f769a6ea-52d5-4275-9178-a3cfecdd7b80/linked_in_profile"
+                           target="_blank" rel="noopener noreferrer"
+                           data-i18n-aria="profile.credential.link.aria"
+                           aria-label="Verificar en Credly la credencial AWS Certified Cloud Practitioner de Sergio Anaya Sánchez (se abre en una pestaña nueva)">
+                            <img class="profile-credential-badge"
+                                 src="images/aws-cloud-practitioner.png"
+                                 alt="Insignia oficial de AWS Certified Cloud Practitioner emitida por Amazon Web Services Training and Certification a Sergio Anaya Sánchez"
+                                 data-i18n-alt="profile.credential.alt"
+                                 width="600" height="600" loading="lazy" decoding="async">
+                            <span class="profile-credential-copy">
+                                <span class="profile-credential-kind" data-i18n="profile.credential.kind">Certificación oficial</span>
+                                <span class="profile-credential-name" data-i18n="profile.credential.name">AWS Certified Cloud Practitioner</span>
+                                <span class="profile-credential-issuer" data-i18n="profile.credential.issuer">Amazon Web Services Training and Certification</span>
+                                <span class="profile-credential-cta">
+                                    <span data-i18n="profile.credential.cta">Verificar en Credly</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                                </span>
+                            </span>
+                        </a>
+                    </div>
+                </aside>
             </div>
         </div>
     </section>
