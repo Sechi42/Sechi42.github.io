@@ -1072,16 +1072,40 @@ function initReveal() {
 }
 
 // ─── FLOATING CTA ─────────────────────────────────────────────────────────────
+// The CTA appears once the hero leaves the viewport, but it must also stay out
+// of the way while #profile is on screen: that section fills the same lower-right
+// track and owns the Credly verification link. Both conditions are tracked in a
+// single update, so observer callback order can never flicker the CTA.
 function initFloatingCTA() {
     const hero = document.querySelector('.hero');
     const cta  = document.getElementById('floatingCta');
     if (!hero || !cta) return;
 
+    // Pages without a profile (and the missing-profile case) keep the original
+    // hero-only behavior.
+    const profile = document.getElementById('profile');
+
+    const intersecting = new Map([[hero, true]]);
+    if (profile) intersecting.set(profile, false);
+
+    // `inert` plus `aria-hidden` keep the hidden CTA out of keyboard tab order
+    // and the accessibility tree while `.visible` handles the visual state.
+    function update() {
+        let hide = false;
+        intersecting.forEach(isVisible => { hide = hide || isVisible; });
+
+        cta.classList.toggle('visible', !hide);
+        cta.toggleAttribute('inert', hide);
+        cta.setAttribute('aria-hidden', hide ? 'true' : 'false');
+    }
+
     const observer = new IntersectionObserver(entries => {
-        cta.classList.toggle('visible', !entries[0].isIntersecting);
+        entries.forEach(entry => intersecting.set(entry.target, entry.isIntersecting));
+        update();
     }, { threshold: 0 });
 
-    observer.observe(hero);
+    update();
+    intersecting.forEach((_, target) => observer.observe(target));
 }
 
 // ─── TOAST + CLIPBOARD ───────────────────────────────────────────────────────
