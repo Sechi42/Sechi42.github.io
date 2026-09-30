@@ -1071,6 +1071,17 @@ html[data-theme="light"] .theme-toggle:hover {
     transition: transform 0.6s var(--ease-out);
 }
 
+/* Brain DS uses the project's branding illustration instead of a screenshot,
+   so the whole artwork stays inside the frame; the white backdrop matches the
+   illustration's own background. Scoped to this card only. */
+.card-image--brand {
+    background: #ffffff;
+}
+
+.card-image--brand img {
+    object-fit: contain;
+}
+
 .project-card:hover .card-image img {
     transform: scale(1.06);
 }
